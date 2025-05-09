@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查子的破起始页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s ease, color 0.3s ease;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
+        }
+        
+        body.light-theme {
+            background-color: #f5f5f5;
+            color: #333;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .time-container {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+        
+        .light-theme .time-container {
+            color: #2c3e50;
+        }
+        
+        .date {
+            font-size: 1.2rem;
+            margin-top: 5px;
+            color: #b0b0b0;
+        }
+        
+        .light-theme .date {
+            color: #7f8c8d;
+        }
+        
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+        
+        .light-theme .search-bar {
+            background-color: #ffffff;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-bar:focus {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .light-theme .search-bar:focus {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background: #3367d6;
+        }
+        
+        .welcome-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .welcome-message {
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-align: center;
+            min-height: 30px;
+        }
+        
+        .light-theme .welcome-message {
+            color: #2c3e50;
+        }
+        
+        .change-welcome-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #2d2d2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .light-theme .change-welcome-btn {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .change-welcome-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        
+        .light-theme .change-welcome-btn:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .change-welcome-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        .quick-links {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .quick-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2d2d2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .light-theme .quick-link {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quick-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .light-theme .quick-link:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .quick-link img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2d2d2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .light-theme .theme-toggle {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        .theme-icon {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.5s ease;
+        }
+        
+        .light-theme .theme-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* 欢迎语切换动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .welcome-message {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <div class="quick-links">
+        <div class="quick-link" title="GitHub">
+            <img src="https://github.githubassets.com/favicons/favicon-dark.png" alt="GitHub">
+        </div>
+        <div class="quick-link" title="YouTube">
+            <img src="https://www.youtube.com/favicon.ico" alt="YouTube">
+        </div>
+        <div class="quick-link" title="X">
+            <img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="X">
+        </div>
+        <div class="quick-link" title="Bilibili">
+            <img src="https://i0.hdslb.com/bfs/static/jinkela/long/images/favicon.ico" alt="Bilibili">
+        </div>
+    </div>
+    
+    <div class="theme-toggle" id="theme-toggle">
+        <svg class="theme-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8V16Z" fill="currentColor"/>
+            <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4V8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16V20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" fill="currentColor"/>
+        </svg>
+    </div>
+    
+    <div class="time-container">
+        <div class="time" id="time">00:00:00</div>
+        <div class="date" id="date">2023年1月1日 星期一</div>
+    </div>
+    
+    <div class="welcome-container">
+        <div class="welcome-message" id="welcome-message"></div>
+        <button class="change-welcome-btn" id="change-welcome-btn" title="切换欢迎语"></button>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" class="search-bar" id="search-input" placeholder="搜索 Google...">
+        <button class="search-btn" id="search-btn">搜索</button>
+    </div>
+
+    <script>
+        // 更新时间
+        function updateTime() {
+            const now = new Date();
+            
+            // 格式化时间
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // 格式化日期
+            const year = now.getFullYear();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const weekday = weekdays[now.getDay()];
+            document.getElementById('date').textContent = `${year}年${month}月${day}日 ${weekday}`;
+        }
+        
+        // 初始化时间并每秒更新
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // 欢迎语
+        const welcomeMessages = [
+            "Hell-low world.",
+            "欢迎回来，准备好开始工作了吗？",
+            "继续前进吧",
+            "Where do you want to go today?",
+            "已深度思考 0 秒。",
+            "努力不一定成功，但不努力一定很爽",
+            "服务器繁忙，请稍后再试。",
+            "ERROR 404"
+        ];
+        
+        let currentWelcomeIndex = 0;
+        
+        function setWelcomeMessage() {
+            const welcomeElement = document.getElementById('welcome-message');
+            welcomeElement.textContent = welcomeMessages[currentWelcomeIndex];
+            
+            // 触发动画
+            welcomeElement.style.animation = 'none';
+            void welcomeElement.offsetWidth; // 触发重绘
+            welcomeElement.style.animation = 'fadeIn 0.5s ease-out';
+        }
+        
+        function nextWelcomeMessage() {
+            currentWelcomeIndex = (currentWelcomeIndex + 1) % welcomeMessages.length;
+            setWelcomeMessage();
+        }
+        
+        // 初始化欢迎语
+        currentWelcomeIndex = Math.floor(Math.random() * welcomeMessages.length);
+        setWelcomeMessage();
+        
+        // 搜索功能
+        function performSearch() {
+            const query = document.getElementById('search-input').value.trim();
+            if (query) {
+                window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            }
+        }
+        
+        document.getElementById('search-btn').addEventListener('click', performSearch);
+        
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        // 快速链接功能
+        const quickLinks = [
+            { url: "https://github.com", icon: "https://github.githubassets.com/favicons/favicon-dark.png" },
+            { url: "https://youtube.com", icon: "https://www.youtube.com/favicon.ico" },
+            { url: "https://x.com", icon: "https://abs.twimg.com/favicons/twitter.3.ico" },
+            { url: "https://bilibili.com/", icon: "https://i0.hdslb.com/bfs/static/jinkela/long/images/favicon.ico" },
+        ];
+        
+        document.querySelectorAll('.quick-link').forEach((link, index) => {
+            link.addEventListener('click', () => {
+                window.open(quickLinks[index].url, '_blank');
+            });
+        });
+        
+        // 主题切换功能
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // 检查本地存储中的主题偏好
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-theme');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+            
+            // 保存主题偏好到本地存储
+            const isLight = body.classList.contains('light-theme');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+        
+        // 欢迎语切换功能
+        document.getElementById('change-welcome-btn').addEventListener('click', nextWelcomeMessage);
+    </script>
+</body>
+</html>
