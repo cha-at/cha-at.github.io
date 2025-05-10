@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">HorizonTab</title>
+</head>
+<body class="dark-theme">
+    <div class="quick-links">
+        <div class="quick-link" title="GitHub">
+            <img src="https://github.githubassets.com/favicons/favicon-dark.png" alt="GitHub">
+        </div>
+        <div class="quick-link" title="YouTube">
+            <img src="https://www.youtube.com/favicon.ico" alt="YouTube">
+        </div>
+        <div class="quick-link" title="X">
+            <img src="https://abs.twimg.com/favicons/twitter.3.ico" alt="X">
+        </div>
+    </div>
+    
+    <div class="settings-toggle" id="settings-toggle">
+    </div>
+    
+    <div class="settings-panel" id="settings-panel">
+        <div class="settings-tabs">
+            <div class="settings-tab active" data-tab="appearance">外观</div>
+            <div class="settings-tab" data-tab="about">关于</div>
+        </div>
+        
+        <div class="settings-content active" data-content="appearance">
+            <div class="settings-group">
+                <div class="settings-title2">主题设置</div>
+                <div class="settings-option">
+                    <input type="checkbox" id="theme-toggle-checkbox">
+                    <label for="theme-toggle-checkbox">浅色主题</label>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-title2">背景设置</div>
+                <input type="text" class="settings-input" id="bg-input" placeholder="输入背景图片URL">
+                <button class="settings-button" id="set-bg-btn">设置背景</button>
+                <button class="settings-button" id="reset-bg-btn">重置背景</button>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-title2">标签页名称</div>
+                <input type="text" class="settings-input" id="page-title-input" placeholder="输入自定义标签页名称">
+                <button class="settings-button" id="set-title-btn">设置名称</button>
+            </div>
+        </div>
+        
+        <div class="settings-content" data-content="about">
+            <div class="settings-group">
+                <div class="settings-title1">HorizonTab</div>
+                <p>Your Browser, Your Horizon.</p>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-title2">版本信息</div>
+                <p>版本: 1.2.0</p>
+                <p>更新日期: 2023-11-15</p>
+            </div>
+            
+            <div class="settings-group">
+                <div class="settings-title2">你说得对，但是怎么用呢</div>
+                <a href="https://chrome.google.com/webstore/detail/occbjkhimchkolibngmcefpjlbknggfh" class="justlinks">用这个插件改</a>
+            </div>
+            
+            <div class="settings-footer">
+                <a href="https://cha-at.github.io/" id="github-link">ChakerAt</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="time-container">
+        <div class="time" id="time">00:00:00</div>
+        <div class="date" id="date">2023年1月1日 星期一</div>
+    </div>
+    
+    <div class="welcome-container">
+        <div class="welcome-message" id="welcome-message"></div>
+        <button class="change-welcome-btn" id="change-welcome-btn" title="切换"></button>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" class="search-bar" id="search-input" placeholder="搜索 Google...">
+        <button class="search-btn" id="search-btn">搜索</button>
+    </div>
+
+    <script src="script.js">
+    </script>
+</body>
+</html>
