@@ -3,49 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NotChakerAt</title>
-    <link rel="stylesheet" href="data/index.css">
+    <title>ChakerAt</title>
     <link rel="icon" type="image/x-icon" href="data/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="data/style.css">
 </head>
 <body>
-
-    <div class="navbar">
-        <a>NotChakerAt</a>
-        <a href="mind_error">MIND ERROR</a>
-        <a href="#links">LINKS</a>
-    </div>
-
-    <div class="container">
-        <div class="avatar" style="background-image: url('data/avatar.png');"></div>
-        <div class="info">
-            <div class="name" style="font-weight: bold;">ChakerAt</div>
-            <div class="description" style="font-weight: bold;">
-                <span style="color: #e75700;">[Very Cool Description Here]<br>[Very Cool Description Here]</span>
+    <!-- 导航栏 -->
+    <header class="container">
+        <nav>
+            <a href="#" class="logo">Not<span>ChakerAt</span></a>
+            <div class="nav-links">
+                <a href="#">首页</a>
+                <a href="#contact">联系</a>
             </div>
-            <div class="links">
-                <a href="https://github.com/cha-at">GITHUB</a>
-                <a href="https://discord.gg/h27rDNevss">DISCORD_SERVER</a>
-                <a href="https://x.com/Chaker_TUR">X</a>
+        </nav>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Hi, <span>ChakerAt</span> here</h1>
+                <p>大概是个啥也不懂的人。</p>
+                <a href="#projects" class="btn">查看我的作品</a>
+            </div>
+            <div class="hero-image">
+                <img src="avatar.png" alt="个人头像" class="avatar">
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="about" class="section">
-        <h2>INFO</h2><img src="data/cha.png" height="20"><br>
-        <p>
-            Game Developer of BlueFortress Dev, Admin of MIAR.
-        </p>
-        <h2>THINGS</h2>
-        <p style="font-weight: bold;" class="links">
-            <a href="mind_error">MIND ERROR <i class="fa fa-link" aria-hidden="true"></i></a>
-        </p>
-        <h2>LINKS</h2>
-        <p class="links" id="links">
-            <a href="mailto:Chakeratlas@outlook.com">Outlook_Email <i class="fa fa-envelope" aria-hidden="true"></i></a><br>
-            <a href="https://discord.gg/h27rDNevss">Discord_Server <i class="fa fa-external-link-square" aria-hidden="true"></i></a><br>
-            <a href="https://steamcommunity.com/id/Chaker0142/">Steam <i class="fa fa-steam-square" aria-hidden="true"></i></a><br>
-        </p>
-    </div>
+    <!-- 标签区域 -->
+    <section id="about" class="container">
+        <div class="tags">
+            <div class="tag">#爱猫</div>
+            <div class="tag">#Vide Coding</div>
+            <div class="tag">#基本啥都不会</div>
+            <div class="tag">#😼</div>
+            <div class="tag">#只会用AI写代码的蠢人</div>
+            <div class="tag">#不会画画</div>
+            <div class="tag">#Bug制造者</div>
+            <div class="tag">#这啥啊</div>
+        </div>
+    </section>
+
+    <!-- 幽默区域 -->
+    <section id="fun" class="container">
+        <div class="fun-section">
+            <h2 class="fun-title">FUN</h2>
+            <p class="joke">万圣节和圣诞节是同一天<br>0.1 + 0.2 != 0.3</p>
+            
+            <div class="fun-facts">
+                <div class="fun-fact">
+                    <i class="fas fa-coffee"></i>
+                    <p>每天消费咖啡因：∞</p>
+                </div>
+                <div class="fun-fact">
+                    <i class="fas fa-bug"></i>
+                    <p>解决的Bug数量：742</p>
+                </div>
+                <div class="fun-fact">
+                    <i class="fas fa-code"></i>
+                    <p>写的代码行数：42,069</p>
+                </div>
+                <div class="fun-fact">
+                    <i class="fas fa-cookie"></i>
+                    <p>编码时吃的零食：∞</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品展示区域 -->
+    <section id="projects" class="container">
+        <h2 class="section-title">MY SHIT</h2>
+        <div class="projects">
+            <div class="project">
+                <img src="https://cdn.jsdelivr.net/gh/BewlyBewly/Imgs/wallpapers/rocky-mountain-cloudscape.jpg" alt="项目1" class="project-img">
+                <div class="project-content">
+                    <a href="https://cha-at.github.io/HorizonTab/"><h3>HorizonTab</h3></a>
+                    <p>一个很无聊的自用浏览器起始页。</p>
+                </div>
+            </div>
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80" alt="项目2" class="project-img">
+                <div class="project-content">
+                    <a href="https://del-stu.github.io/FAML/website/"><h3>FAML</h3></a>
+                    <p>一款全新的标记语言，旨在挑战您的理智的同时提供十分存疑的生产力。</p>
+                </div>
+            </div>
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="项目3" class="project-img">
+                <div class="project-content">
+                    <h3>占位符</h3>
+                    <p>我感觉没有更多的东西可以放在这里了。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 链接区域 -->
+    <section id="contact" class="container">
+        <h2 class="section-title">LINKS</h2>
+        <div class="links">
+            <a href="https://github.com/cha-at" class="social-link"><i class="fa-brands fa-github"></i></a>
+            <a href="https://discord.gg/USyRkJAc" class="social-link"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://www.youtube.com/@Chaker0142" class="social-link"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://x.com/Chaker_TUR" class="social-link"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://qm.qq.com/cgi-bin/qm/qr?k=_KFsgKQJgKVgyyt-mPFftx258m0auHh8&jump_from=webapi&authKey=NMfUMEDzVryvuo2/Qct4nRDX7mvaAqlEdOs5a6ysrBddSdWrlzuudNJ7S1mOpZhM" class="social-link"><i class="fa-brands fa-qq"></i></a>
+            <a href="https://space.bilibili.com/1543261354" class="social-link"><i class="fa-brands fa-bilibili"></i></a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="container">
+        <p>© 2025 ChakerAt. </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const avatar = document.querySelector('.avatar');
+            avatar.addEventListener('click', function() {
+                alert('别戳我的脸。');
+            });
+        });
+    </script>
 </body>
 </html>
