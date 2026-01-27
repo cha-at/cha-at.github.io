@@ -1,0 +1,261 @@
+/*
+该样式表是基于Foxden (https://alexasfoxden.neocities.org/) 的修改。
+2025 ChakerAt.
+
+Copyright (c) 2025 Alex's GlowCity Studio. All Rights Reserved.
+
+*/
+body {
+    background-color: #008080;
+    font-family: "Microsoft Sans Serif", "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    user-select: none;
+}
+
+.container {
+    margin: 20px auto;
+    border: 2px outset #c3c3c3;
+    background-color: #c3c3c3;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 1000px;
+}
+
+.container.fit {
+    width: fit-content;
+    min-width: 300px;
+}
+
+.header {
+    background: linear-gradient(0.25turn, #000080, 50%, #1084D0);
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 3px 5px;
+    border-bottom: 1px solid #000000;
+}
+
+.content {
+    background-color: #FFFFFF;
+    padding: 10px;
+    border: 2px inset #c3c3c3;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav {
+    background-color: #c3c3c3;
+    padding: 5px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #000000;
+    padding: 3px 8px;
+    border: 1px solid #c3c3c3;
+    border-bottom: none;
+    background-color: #c3c3c3;
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav a:hover {
+    border: 1px outset #FFFFFF;
+    background-color: #DFDFDF;
+}
+
+.nav a.active {
+    border: 1px inset #808080;
+    background-color: #FFFFFF;
+}
+
+h1 {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+}
+
+h2 {
+    font-size: 16px;
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid #c3c3c3;
+    padding-bottom: 3px;
+}
+
+.post-meta {
+    font-size: 12px;
+    color: #808080;
+    margin-bottom: 10px;
+}
+
+.post-content {
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+a:link,
+a:visited {
+    color: #0000FF;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FF0000;
+    text-decoration: underline;
+}
+
+.gallery-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.gallery-item img {
+    width: 200px;
+    border: 4px inset #c3c3c3;
+    padding: 3px;
+    background-color: #FFFFFF;
+}
+
+.image-row {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+.image-row img{
+    background-color: #FFFFFF;
+}
+
+.gallery-table {
+    border-collapse: collapse;
+}
+
+.gallery-table td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+.footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 2px;
+    padding-top: 2px;
+    border-top: 1px solid #c3c3c3;
+}
+
+section {
+    background-color: #c3c3c3;
+    padding: 5px;
+}
+
+:root {
+    --border: #c3c3c3;
+}
+
+header {
+    background: linear-gradient(to bottom, #000080, #1084D0);
+    background-image: url('image/header.png');
+    margin-top: 5px;
+    background-size: cover;
+	background-position: center;
+	width: 100%;
+	height: 120px;
+	border: 2px ridge var(--border);
+	border-radius: 5px;
+	position: relative;
+}
+header span {
+    font-size: 2.5rem;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    margin: 10px;
+    font-weight: bold;
+    text-shadow: 
+        2px 2px 0 #000,
+        -2px 2px 0 #000,
+        2px -2px 0 #000,
+        -2px -2px 0 #000;
+    color: white;
+}
+
+.buttons img {
+    width: 88px;
+}
+
+.small { flex: 1 1 9%; }
+.large { flex: 1 1 82%; }
+.full { flex: 1 1 100%; }
+.half { width: 48%; }
+
+fieldset {
+    border: 2px groove #FFFFFF;
+    border-radius: 0;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+legend {
+    margin-left: 10px;
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+.cols-2 {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cols-2 > * {
+    flex: 1;
+    min-width: 250px;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-table td {
+    padding: 5px;
+    vertical-align: top;
+}
+
+.info-label {
+    font-weight: bold;
+    width: 100px;
+    text-align: right;
+    padding-right: 15px;
+}
+
+.social-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.social-links li {
+    display: flex;
+    align-items: center;
+}
