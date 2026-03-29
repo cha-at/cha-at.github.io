@@ -1,9 +1,5 @@
 /*
-该样式表是基于Foxden (https://alexasfoxden.neocities.org/) 的修改。
-2025 ChakerAt.
-
-Copyright (c) 2025 Alex's GlowCity Studio. All Rights Reserved.
-
+该样式表是基于Foxden (https://alexasfoxden.neocities.org/) 的重度修改。
 */
 body {
     background-color: #008080;
@@ -49,7 +45,6 @@ body {
     margin-top: 5px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
 }
 
 .nav {
@@ -99,7 +94,8 @@ h2 {
     margin-bottom: 10px;
 }
 
-.post-content {
+.post-content,
+content {
     line-height: 1.5;
     display: flex;
     flex-direction: column;
@@ -182,18 +178,16 @@ header {
 	position: relative;
 }
 header span {
-    font-size: 2.5rem;
+    background: linear-gradient(0.25turn, #000, 50%, #242424);
+    padding-bottom: 2px;
+    outline: 0.3rem solid #000;
+    color: #ffffff;
+    font-size: 2.4rem;
     position: absolute;
     bottom: 0;
     right: 10px;
     margin: 10px;
     font-weight: bold;
-    text-shadow: 
-        2px 2px 0 #000,
-        -2px 2px 0 #000,
-        2px -2px 0 #000,
-        -2px -2px 0 #000;
-    color: white;
 }
 
 .buttons img {
