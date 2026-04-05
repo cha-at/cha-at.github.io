@@ -2,8 +2,7 @@
 该样式表是基于Foxden (https://alexasfoxden.neocities.org/) 的重度修改。
 */
 body {
-    background-color: #008080;
-    font-family: "Microsoft Sans Serif", "Arial", sans-serif;
+    font-family: "Microsoft Sans Serif", "Microsoft Sans Serif", "Arial", sans-serif;
     margin: 0;
     padding: 0;
     color: #000000;
@@ -12,6 +11,17 @@ body {
     align-items: center;
     min-height: 100vh;
     user-select: none;
+}
+
+body:not(.docs_body) {
+    background-color: #008080;
+}
+
+.docs_body {
+    background-image: url('image/idk.png');
+    background-repeat: repeat;
+    background-size: 32px 32px;
+    image-rendering: pixelated;
 }
 
 .container {
@@ -84,6 +94,9 @@ h1 {
 h2 {
     font-size: 16px;
     margin: 0 0 5px 0;
+}
+
+.post-title {
     border-bottom: 1px solid #c3c3c3;
     padding-bottom: 3px;
 }
@@ -253,3 +266,10 @@ legend {
     display: flex;
     align-items: center;
 }
+
+.redacted {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 3px 5px;
+   }
+ 
