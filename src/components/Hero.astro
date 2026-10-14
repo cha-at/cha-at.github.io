@@ -1,0 +1,51 @@
+---
+import { site } from "../data/site";
+import RegCross from "./RegCross.astro";
+---
+
+<section id="hero" class="relative overflow-hidden px-4 pt-24 pb-10 sm:px-8 md:px-12">
+  <RegCross class="left-3 top-11 hidden sm:block" />
+  <RegCross class="right-3 top-11 hidden sm:block" />
+
+  <div class="mx-auto grid max-w-7xl grid-cols-12 gap-x-4">
+    <div class="col-span-12 flex items-center justify-between font-mono text-[11px] tracking-[0.22em] text-win-shadow" data-reveal>
+      <span>REV 98.09 — PERSONAL HOMEPAGE</span>
+      <span class="hidden sm:inline">NORM 1957.68-REV98</span>
+      <span class="text-red">1/1</span>
+    </div>
+
+    <div class="col-span-12 mt-10 md:mt-16" data-reveal>
+      <h1 class="select-none">
+        <span class="sr-only">{site.title}</span>
+        <span class="wipe block font-display uppercase text-ink" style="--doto-weight: 900; font-size: clamp(3.4rem, 16.5vw, 15rem); line-height: 0.92;" aria-hidden="true"
+          >CHAKERAT</span
+        >
+        <span class="mt-1 flex flex-wrap items-baseline gap-x-5 gap-y-1 md:mt-2" aria-hidden="true">
+          <span
+            class="wipe block font-display uppercase text-red"
+            style="--doto-weight: 700; font-size: clamp(1.6rem, 7.5vw, 7rem); line-height: 0.95; --i: 1">CYBER NEST</span
+          >
+          <span
+            class="wipe block font-sans font-black tracking-tight text-ink"
+            style="font-size: clamp(1.4rem, 5vw, 4.4rem); --i: 2">欢迎</span
+          >
+        </span>
+      </h1>
+    </div>
+
+    <div class="col-span-12 mt-8 grid grid-cols-12 gap-x-4 md:mt-12">
+      <p class="col-span-12 max-w-xl font-sans text-sm leading-relaxed text-ink/80 sm:text-base md:col-span-6 lg:col-span-5" data-reveal style="--i: 2">
+        Welcome to my nest!<br>
+        This is the living room, please take a seat (actually you can’t), or scroll down for more info.
+      </p>
+    </div>
+
+    <div class="col-span-12 mt-16 border-t border-ink/20 pt-3 font-mono text-[11px] tracking-wider text-win-shadow md:mt-24" data-reveal style="--i: 4">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <span>PAGE 1 OF 1 — SCROLL FOR STILL-MORE INTERNET</span>
+        <span class="hidden md:inline">CURSOR: FINE · GRID: 40PX · PALETTE: 4+1</span>
+        <span class="text-ink">EST. SOMEWHERE BETWEEN DIAL-UP AND NOW</span>
+      </div>
+    </div>
+  </div>
+</section>

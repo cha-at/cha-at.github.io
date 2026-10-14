@@ -1,0 +1,481 @@
+@import "tailwindcss";
+
+@import "@fontsource-variable/doto";
+@import "@fontsource-variable/geist";
+@import "@fontsource/noto-sans-sc/400.css";
+
+/* Departure Mono — self-hosted (SIL OFL, see /fonts/departure-mono-LICENSE.txt) */
+@font-face {
+  font-family: "Departure Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/departure-mono.woff2") format("woff2");
+}
+
+@theme {
+  /* Win98 chrome */
+  --color-face: #c0c0c0;
+  --color-face-light: #dfdfdf;
+  --color-win-light: #ffffff;
+  --color-win-shadow: #808080;
+  --color-win-dark: #0a0a0a;
+  --color-navy: #000080;
+  --color-navy-light: #1084d0;
+  --color-teal: #008080;
+
+  /* Swiss editorial */
+  --color-paper: #f4f4f0;
+  --color-ink: #101010;
+  --color-red: #e30613;
+
+  --font-display: "Doto Variable", "Geist Variable", ui-sans-serif, sans-serif;
+  --font-sans: "Geist Variable", "Helvetica Neue", Helvetica, Arial, "Noto Sans SC", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  --font-mono: "Departure Mono", ui-monospace, Consolas, "Courier New", "Microsoft YaHei UI", "PingFang SC", monospace;
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-blink: blink 1.1s steps(2, start) infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+}
+
+:root {
+  --z-statusbar: 50;
+  --z-window: 60;
+  --z-cursor: 90;
+  --z-boot: 100;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.booting {
+  overflow: hidden;
+}
+
+/* Body base (paper/ink) is applied by the main Layout only, so standalone
+   pages like the 404 can carry their own body palette. */
+
+/* 40px Swiss grid overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgb(16 16 16 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(16 16 16 / 0.055) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ---------- Win98 bevels (box-shadow, zero layout shift) ---------- */
+
+@utility bevel {
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px 0 var(--color-win-dark),
+    inset 1px 1px 0 var(--color-win-light),
+    inset -2px -2px 0 var(--color-win-shadow),
+    inset 2px 2px 0 var(--color-face-light);
+}
+
+@utility bevel-in {
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 var(--color-win-dark),
+    inset -1px -1px 0 var(--color-win-light),
+    inset 2px 2px 0 var(--color-win-shadow),
+    inset -2px -2px 0 var(--color-face-light);
+}
+
+@utility bevel-thin {
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px 0 var(--color-win-dark),
+    inset 1px 1px 0 var(--color-face-light);
+}
+
+@utility bevel-thin-in {
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 var(--color-win-dark),
+    inset -1px -1px 0 var(--color-face-light);
+}
+
+/* ---------- Win98 scrollbar ---------- */
+
+* {
+  scrollbar-color: var(--color-face) var(--color-face-light);
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+  background: var(--color-face-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-face);
+  border: 2px solid;
+  border-color: var(--color-win-light) var(--color-win-dark) var(--color-win-dark) var(--color-win-light);
+  box-shadow: inset -1px -1px 0 var(--color-win-shadow), inset 1px 1px 0 var(--color-face-light);
+}
+
+::-webkit-scrollbar-button {
+  background: var(--color-face);
+  border: 2px solid;
+  border-color: var(--color-win-light) var(--color-win-dark) var(--color-win-dark) var(--color-win-light);
+  display: block;
+  height: 16px;
+  width: 16px;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-face-light);
+}
+
+::selection {
+  background: var(--color-red);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 1px dotted var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* ---------- Custom cursor: hide the native one when active ---------- */
+
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor input,
+html.has-cursor [role="button"] {
+  cursor: none;
+}
+
+/* ---------- Boot screen ---------- */
+
+/* Base state: hidden. The html state classes must out-specify both this ID
+   rule and the display utilities on the element itself. */
+#bootscreen {
+  display: none;
+}
+
+html.boot-active #bootscreen {
+  display: flex !important;
+}
+
+html.boot-done #bootscreen {
+  display: none !important;
+}
+
+/* progressive typewriter driven by --chars / --type-delay */
+.boot-line {
+  width: calc(var(--chars, 0) * 1ch);
+  overflow: hidden;
+  white-space: pre;
+  animation: boot-typing var(--type-time, 0.4s) steps(var(--chars, 1), end) var(--type-delay, 0s) both;
+}
+
+@keyframes boot-typing {
+  from { width: 0; }
+}
+
+/* ---------- Reveal on scroll ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.55s cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 0.55s cubic-bezier(0.2, 0.6, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+
+  [data-reveal].in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /*
+   * Pixel wipes. A clip-path leaves an element with zero intersection area,
+   * so IntersectionObserver can never fire on a clipped element — wipes are
+   * triggered by an ancestor (or a sibling group marked [data-reveal]) gaining .in.
+   */
+  .wipe {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  [data-reveal].in .wipe,
+  .in > .wipe,
+  .wipe.in {
+    animation: wipe-in 0.5s steps(7, end) forwards;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  [data-reveal] .wipe {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  @keyframes wipe-in {
+    to { clip-path: inset(0 0 0 0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .boot-line {
+    width: auto;
+    overflow: visible;
+    animation: none !important;
+  }
+
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
+/* ---------- Marquee ---------- */
+
+.marquee-track {
+  animation: var(--animate-marquee);
+  animation-duration: var(--marquee-speed, 32s);
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---------- Doto pixel crispness: integer line-height multiples ---------- */
+
+.font-display {
+  letter-spacing: 0;
+  font-variation-settings: "wght" var(--doto-weight, 900);
+  font-weight: var(--doto-weight, 900);
+}
+
+/* ---------- Archive window: viewport fallback, then desktop draggable overrides ---------- */
+
+.archive-window-wrap[hidden] {
+  display: none;
+}
+
+.archive-window-wrap {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  margin: 24px auto 0;
+}
+
+@media (min-width: 1024px) and (pointer: fine) {
+  .archive-window-wrap {
+    position: fixed;
+    top: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(680px, calc(100vw - 48px));
+    max-width: none;
+    margin: 0;
+    z-index: var(--z-window);
+    will-change: transform;
+  }
+
+  .archive-window-wrap.dragging .window-titlebar {
+    cursor: grabbing;
+  }
+
+  .archive-window-wrap.dragging #archive-dialog {
+    user-select: none;
+  }
+}
+
+/* Touch devices get the inline window even on wide screens */
+@media (pointer: coarse) {
+  .archive-window-wrap {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 680px;
+    margin: 24px auto 0;
+    will-change: auto;
+  }
+}
+
+.archive-window-wrap.is-maximized {
+  position: fixed;
+  inset: 40px 8px 8px 8px;
+  width: auto;
+  z-index: var(--z-window);
+}
+
+/* ---------- Custom cursor ---------- */
+
+.cursor-cross,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease-out;
+  will-change: transform;
+}
+
+.cursor-cross {
+  color: var(--color-ink);
+}
+
+.cursor-ring {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 999px;
+  transition: opacity 0.18s ease-out, border-color 0.18s ease-out, background-color 0.18s ease-out;
+}
+
+/* Hover state: a filled white disc in difference blend mode — everything
+   under it renders as its photographic negative (the "invert lens"). */
+.cursor-ring--active {
+  border-color: #ffffff;
+  background-color: #ffffff;
+  mix-blend-mode: difference;
+}
+
+/* ---------- Cross-page transition: window minimize ↔ restore ---------- */
+
+/* Both documents opt in via this stylesheet; the browser snapshots the
+   viewport and runs these pseudo-element animations across the navigation.
+   --vt-dur is mirrored by MINIMIZE_MS in src/scripts/navFeedback.ts. */
+@view-transition {
+  navigation: auto;
+}
+
+:root {
+  --vt-dur: 420ms;
+  --vt-scale: 0.045;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --vt-scale: 0.09;
+  }
+}
+
+/* Opaque "desktop" behind the shrinking window: hides the live DOM swap and
+   matches the paper base + 40px grid of body::before. */
+::view-transition {
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(to right, rgb(16 16 16 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(16 16 16 / 0.055) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* UA default mixes with plus-lighter; normal keeps the snapshots opaque. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+  box-sizing: border-box;
+  transform-origin: 0 0;
+  animation-duration: var(--vt-dur);
+  animation-fill-mode: both;
+  border: 2px solid;
+  border-color: var(--color-win-light) var(--color-win-dark) var(--color-win-dark) var(--color-win-light);
+  box-shadow: 0 6px 18px rgb(16 16 16 / 0.28);
+}
+
+/* Act 1: the page shrinks "into" the OS shell — strong ease-in, hold opaque
+   until it has nearly arrived, then fade the last few frames. */
+::view-transition-old(root) {
+  animation-name: vt-minimize;
+  animation-timing-function: cubic-bezier(0.6, 0.05, 0.9, 0.35);
+}
+
+/* Act 2: the next page pops back out from the same corner (easeOutQuint). */
+::view-transition-new(root) {
+  animation-name: vt-restore;
+  animation-delay: var(--vt-dur);
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes vt-minimize {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(12px, 40px) scale(var(--vt-scale));
+    opacity: 0;
+  }
+}
+
+@keyframes vt-restore {
+  from {
+    transform: translate(12px, 40px) scale(var(--vt-scale));
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Status bar travels as OS shell: fades with the minimize, returns late. */
+::view-transition-old(statusbar) {
+  animation: vt-shell-out var(--vt-dur) linear both;
+}
+
+::view-transition-new(statusbar) {
+  animation: vt-shell-in var(--vt-dur) linear both;
+  animation-delay: var(--vt-dur);
+}
+
+@keyframes vt-shell-out {
+  to { opacity: 0; }
+}
+
+@keyframes vt-shell-in {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

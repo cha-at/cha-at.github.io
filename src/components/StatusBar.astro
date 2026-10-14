@@ -1,0 +1,72 @@
+---
+import { site } from "../data/site";
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-[var(--z-statusbar)] flex h-8 items-stretch gap-px bg-face bevel font-mono text-[11px] text-ink [view-transition-name:statusbar]"
+>
+  <a
+    href="#hero"
+    class="flex shrink-0 items-center gap-2 px-3 font-bold tracking-wider hover:bg-face-light"
+    data-cursor="link"
+    data-snd="click"
+  >
+    <span class="inline-block h-2.5 w-2.5 bg-red"></span>
+    <span>{site.name.toUpperCase()}</span>
+  </a>
+
+  <span class="relative hidden min-w-0 flex-1 overflow-hidden bg-face sm:block" aria-hidden="true">
+    <span class="absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-face to-transparent"></span>
+    <span class="absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-face to-transparent"></span>
+    <span class="statusbar-marquee absolute inset-y-0 flex items-center whitespace-nowrap">
+      <span class="px-2">C:\CHAKERAT\CYBER_NEST\</span>
+      <span class="px-2 text-red">REV 98.09</span>
+      <span class="px-2">12-COL MODULAR GRID</span>
+      <span class="px-2">NORM 1957.68-REV98</span>
+      <span class="px-2 text-red">WELCOME 欢迎</span>
+      <span class="px-2">C:\CHAKERAT\CYBER_NEST\</span>
+      <span class="px-2 text-red">REV 98.09</span>
+      <span class="px-2">12-COL MODULAR GRID</span>
+      <span class="px-2">NORM 1957.68-REV98</span>
+      <span class="px-2 text-red">WELCOME 欢迎</span>
+    </span>
+  </span>
+
+  <span class="hidden items-center gap-2 px-3 lg:flex">
+    <span class="text-win-shadow">POS</span>
+    <span id="coord-tracker" class="tabular-nums">X:0000 Y:0000</span>
+  </span>
+
+  <button
+    id="snd-toggle"
+    type="button"
+    class="flex shrink-0 items-center gap-2 px-3 font-bold hover:bg-face-light bevel-thin"
+    aria-pressed="false"
+    data-cursor="link"
+    title="Toggle synthesized UI sounds"
+  >
+    <span class="inline-block h-2 w-2 bg-win-shadow" id="snd-led"></span>
+    <span id="snd-label">SND: OFF</span>
+  </button>
+
+  <span class="flex shrink-0 items-center px-3 tabular-nums" aria-hidden="true">
+    <span id="live-clock">--:--</span>
+  </span>
+</header>
+
+<style>
+  .statusbar-marquee {
+    animation: statusbar-scroll 41s linear infinite;
+  }
+
+  @keyframes statusbar-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .statusbar-marquee {
+      animation: none !important;
+    }
+  }
+</style>

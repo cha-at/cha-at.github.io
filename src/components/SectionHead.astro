@@ -1,0 +1,35 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  cn?: string;
+  meta?: string;
+  invert?: boolean;
+}
+
+const { number, title, cn, meta, invert = false } = Astro.props;
+---
+
+<div class="mb-10 md:mb-14">
+  <div class={`flex items-baseline justify-between border-b-2 pb-2 font-mono text-[11px] tracking-widest ${invert ? "border-white/40 text-white/70" : "border-ink text-win-shadow"}`}>
+    <span>
+      SEC.{number} {meta && <span class={invert ? "text-white/50" : "text-win-shadow"}>{meta}</span>}
+    </span>
+    <span class={invert ? "text-white/50" : "text-win-shadow"}>DAT 1998.10.12</span>
+  </div>
+  <div class="mt-4 flex flex-wrap items-end gap-x-6 gap-y-2">
+    <span
+      class="font-display leading-none sm:leading-none"
+      style="--doto-weight: 900; font-size: clamp(4.5rem, 13vw, 11rem);"
+      aria-hidden="true"
+      data-reveal
+      >{number}</span
+    >
+    <div class="pb-2 md:pb-4">
+      <h2 class={`font-display leading-none ${invert ? "text-white" : "text-ink"}`} style="font-size: clamp(1.8rem, 4.5vw, 3.4rem); --doto-weight: 700;">
+        {title}
+      </h2>
+      {cn && <p class={`mt-2 font-mono text-xs tracking-[0.35em] ${invert ? "text-white/60" : "text-win-shadow"}`}>{cn}</p>}
+    </div>
+  </div>
+</div>

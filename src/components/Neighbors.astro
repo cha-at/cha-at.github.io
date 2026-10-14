@@ -1,0 +1,58 @@
+---
+import { neighbors } from "../data/site";
+import SectionHead from "./SectionHead.astro";
+---
+
+<section id="neighbors" class="relative px-4 py-20 sm:px-8 md:px-12 md:py-28">
+  <div class="mx-auto max-w-7xl">
+    <SectionHead number="03" title="NEIGHBORS" cn="网上邻居 — SWAP LINKS ANYTIME" meta="— THE NETWORK" />
+
+    <p class="mb-10 max-w-xl font-sans text-sm leading-relaxed text-ink/75 sm:text-base" data-reveal>
+      Websites of friends, kept the old way: name in, name out, no algorithm in between.
+      Want to swap? Wire me on any frequency below — send your URL and the name to display.
+    </p>
+
+    <div class="border-t border-ink/15" data-reveal style="--i: 1">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          neighbors.map((n, i) => (
+            <li class={i > 0 ? "border-t border-ink/15 sm:border-t-0 sm:border-l" : ""}>
+              <a
+                href={n.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex h-full flex-col justify-between gap-8 px-1 py-6 transition-colors hover:bg-ink hover:text-paper sm:px-5"
+                data-snd="click"
+                data-cursor="link"
+              >
+                <div class="flex items-start justify-between gap-3 font-mono text-[10px] tracking-[0.25em] text-win-shadow group-hover:text-paper/60">
+                  <span>NEIGHBOR {String(i + 1).padStart(2, "0")}</span>
+                  <span aria-hidden="true">↗</span>
+                </div>
+                <div>
+                  <p class="font-sans text-base font-bold leading-snug tracking-tight sm:text-lg">{n.name}</p>
+                  <p class="mt-1 font-mono text-[11px] text-win-shadow group-hover:text-red">{n.subtitle}</p>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <p class="mt-8 font-mono text-xs leading-relaxed text-ink/70" data-reveal style="--i: 2">
+      WARNING: We are not responsible for the
+      <button
+        type="button"
+        class="redacted-toggle mx-1 inline-block min-w-20 cursor-pointer bg-ink px-2 text-transparent align-baseline select-none hover:bg-red focus-visible:bg-red"
+        data-redacted="[REDACTED]"
+        data-cursor="link"
+        data-snd="click"
+        aria-label="Redacted text — click to reveal"
+      >
+        ████████
+      </button>
+      that may occur.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+import BootScreen from "../components/BootScreen.astro";
+import StatusBar from "../components/StatusBar.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = `${site.title}`,
+  description = site.description,
+  ogImage = "/og.png",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="preload" href="/fonts/departure-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+        var params = new URLSearchParams(window.location.search);
+        var booted = false;
+        try {
+          booted = sessionStorage.getItem("chakerat.booted") === "1";
+        } catch (e) {
+          booted = false;
+        }
+        if (!booted && !params.has("skipboot")) {
+          root.classList.add("boot-active");
+          root.style.overflow = "hidden";
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen bg-paper font-sans text-ink antialiased">
+    <BootScreen />
+    <StatusBar />
+    <slot />
+    <script>
+      import "../scripts/main";
+    </script>
+  </body>
+</html>

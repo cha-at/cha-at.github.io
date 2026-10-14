@@ -1,0 +1,42 @@
+---
+import { aboutFacts } from "../data/site";
+import SectionHead from "./SectionHead.astro";
+---
+
+<section id="about" class="relative px-4 py-20 sm:px-8 md:px-12 md:py-28">
+  <div class="mx-auto max-w-7xl">
+    <SectionHead number="01" title="ABOUT" cn="关于" meta="— THE HUMAN" />
+
+    <div class="grid grid-cols-12 gap-x-4 gap-y-10">
+      <div class="col-span-12 md:col-span-7 lg:col-span-6">
+        <p class="font-sans text-2xl font-bold leading-snug tracking-tight text-ink sm:text-3xl lg:text-4xl" data-reveal>
+          "Crazy man coding stupid shits."
+        </p>
+        <div class="mt-8 space-y-4 font-sans text-sm leading-relaxed text-ink/75 sm:text-base" data-reveal style="--i: 1">
+          <p>Here is Chaker, a web and game developer from MIAR STAFF team.</p>
+          <p>A chinese with poor English, vibe coding addict, and Windows 11 user for no reason.</p>
+          <p>My hobby is post my random bullshits onto the internet.</p>
+        </div>
+      </div>
+
+      <div class="col-span-12 md:col-span-5 md:col-start-9 lg:col-span-4 lg:col-start-9" data-reveal style="--i: 2">
+        <div class="relative bg-face p-1 bevel">
+          <div class="flex items-center justify-between bg-navy px-2 py-1 font-mono text-[11px] font-bold text-white">
+            <span>PROPERTIES</span>
+            <span aria-hidden="true">✕</span>
+          </div>
+          <dl class="bg-white p-4 font-mono text-xs bevel-in">
+            {
+              aboutFacts.map((fact) => (
+                <div class="flex flex-col gap-0.5 border-b border-ink/10 py-2 last:border-b-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                  <dt class="shrink-0 text-win-shadow">{fact.k}</dt>
+                  <dd class="break-words text-ink sm:text-right sm:font-bold">{fact.v}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

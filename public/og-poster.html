@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>og poster</title>
+<style>
+  @font-face { font-family: 'Doto'; src: url('./fonts/doto.woff2') format('woff2-variations'); font-weight: 100 900; }
+  @font-face { font-family: 'Departure Mono'; src: url('./fonts/departure-mono.woff2') format('woff2'); font-weight: 400; }
+  * { margin: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; background: #f4f4f0; color: #101010;
+    font-family: 'Departure Mono', monospace; overflow: hidden; position: relative; }
+  .grid { position: absolute; inset: 0;
+    background-image: linear-gradient(to right, rgba(16,16,16,.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(16,16,16,.055) 1px, transparent 1px);
+    background-size: 40px 40px; }
+  .bar { position: relative; height: 32px; background: #c0c0c0; display: flex; align-items: stretch; gap: 1px;
+    box-shadow: inset -1px -1px 0 #0a0a0a, inset 1px 1px 0 #fff, inset -2px -2px 0 #808080, inset 2px 2px 0 #dfdfdf; }
+  .bar span { display: flex; align-items: center; padding: 0 10px; font-size: 12px; white-space: nowrap; }
+  .lamp { width: 10px; height: 10px; background: #e30613; display: inline-block; margin-right: 8px; }
+  .dim { color: #808080; }
+  .red { color: #e30613; }
+  .body { position: relative; padding: 42px 56px 0; }
+  .kicker { font-size: 13px; letter-spacing: .22em; color: #808080; display: flex; justify-content: space-between; }
+  .kicker .red { font-weight: bold; }
+  h1 { font-family: 'Doto', sans-serif; font-weight: 900; font-size: 148px; line-height: .92; letter-spacing: 0; margin-top: 26px; }
+  .sub { font-family: 'Doto', sans-serif; font-weight: 700; font-size: 62px; line-height: 1; color: #e30613; letter-spacing: .01em; margin-top: 4px; }
+  .cn { font-family: 'Noto Sans SC', 'Microsoft YaHei UI', sans-serif; font-weight: 900; font-size: 52px; margin-left: 22px; letter-spacing: 0; }
+  .foot { position: absolute; left: 56px; right: 56px; bottom: 34px; display: flex; justify-content: space-between;
+    font-size: 13px; letter-spacing: .18em; color: #808080; border-top: 1px solid rgba(16,16,16,.25); padding-top: 12px; }
+  .foot b { color: #101010; }
+  .cross { position: absolute; font-size: 14px; color: rgba(16,16,16,.5); }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="bar">
+    <span style="font-weight:bold"><span class="lamp"></span>CHAKERAT</span>
+    <span class="dim">C:\CHAKERAT\CYBER_NEST\</span>
+    <span class="red" style="font-weight:bold">REV 98.09</span>
+    <span>12-COL MODULAR GRID</span>
+    <span class="dim">NORM 1957.68-REV98</span>
+    <span class="red">WELCOME 欢迎</span>
+  </div>
+  <div class="body">
+    <div class="kicker"><span>REV 98.09 — PERSONAL HOMEPAGE</span><span>NORM 1957.68-REV98</span><span class="red">1/1</span></div>
+    <h1>CHAKERAT</h1>
+    <div class="sub">CYBER NEST<span class="cn">欢迎</span></div>
+  </div>
+  <div class="cross" style="left:12px;top:44px">+</div>
+  <div class="cross" style="right:12px;top:44px">+</div>
+  <div class="foot"><span>DARK-ROOM HTML ENERGY · SWISS DISCIPLINE</span><span><b>CHAKERAT.HOME</b> — EST. 1998—2026</span></div>
+</body>
+</html>

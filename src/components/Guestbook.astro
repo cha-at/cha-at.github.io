@@ -1,0 +1,68 @@
+---
+import SectionHead from "./SectionHead.astro";
+---
+
+<section id="guestbook" class="relative px-4 py-20 sm:px-8 md:px-12 md:py-28">
+  <div class="mx-auto max-w-7xl">
+    <SectionHead number="05" title="USELESS GUESTBOOK" cn="没用的留言区" meta="— LEAVE A TRACE" />
+
+    <div class="grid grid-cols-12 gap-x-4">
+      <div class="col-span-12 md:col-span-5">
+        <p class="max-w-md font-sans text-sm leading-relaxed text-ink/75 sm:text-base" data-reveal>
+          This guestbook is very <strong>deconstructive</strong>: whatever you write, disappears like never existed.
+          So I don't have to read any messages. Peak spam protection.
+        </p>
+      </div>
+
+      <div class="col-span-12 mt-8 md:col-span-6 md:col-start-7 md:mt-0" data-reveal style="--i: 1">
+        <div class="relative mx-auto max-w-md bg-face p-1 bevel" id="guestbook-panel">
+          <div class="flex items-center justify-between bg-gradient-to-r from-navy to-navy-light px-2 py-1">
+            <span class="font-mono text-[11px] font-bold tracking-wider text-white">MESSAGE.BIN</span>
+            <span class="font-mono text-[11px] text-white/70" aria-hidden="true">✕</span>
+          </div>
+
+          <form class="space-y-3 p-3" id="guestbook-form" novalidate>
+            <div>
+              <label for="guestbook-input" class="mb-1 block font-mono text-[10px] tracking-[0.2em] text-win-shadow">YOUR MESSAGE:</label>
+              <textarea
+                id="guestbook-input"
+                name="message"
+                rows="3"
+                class="w-full resize-none bg-white px-2 py-1.5 font-mono text-xs text-ink bevel-in focus:outline-none"
+                placeholder="leave a nice message..."
+              ></textarea>
+            </div>
+
+            <div class="flex items-center justify-between gap-3">
+              <span class="font-mono text-[10px] text-win-shadow" id="guestbook-hint">AUTO-DESTRUCT: ARMED</span>
+              <button
+                type="submit"
+                id="guestbook-send"
+                class="group relative min-w-44 bg-face px-3 py-2 font-mono text-xs font-bold tracking-wider text-ink bevel active:bevel-in"
+                data-cursor="link"
+                data-label-normal="SEND"
+                data-label-hover="CANCEL AND DELETE ALL"
+              >
+                <span class="block transition-transform group-hover:scale-105" id="guestbook-send-label">SEND</span>
+              </button>
+            </div>
+
+            <p class="min-h-4 font-mono text-[10px] text-red" id="guestbook-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <div
+            id="guestbook-stamp"
+            class="pointer-events-none absolute inset-0 grid place-items-center opacity-0"
+            aria-hidden="true"
+          >
+            <span
+              class="rotate-[-8deg] whitespace-nowrap border-2 border-red px-3 py-2 text-center font-mono font-bold tracking-[0.1em] text-red uppercase mix-blend-multiply sm:border-4 sm:px-4 sm:text-sm sm:tracking-[0.15em]"
+              style="font-size: clamp(0.6rem, 3.4vw, 0.875rem)"
+              >message successfully destroyed ✓</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

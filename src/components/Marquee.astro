@@ -1,0 +1,39 @@
+---
+interface Props {
+  items?: string[];
+  speed?: number;
+  separator?: string;
+  class?: string;
+  itemClass?: string;
+}
+
+const {
+  items = [],
+  speed = 32,
+  separator = "/",
+  class: className = "",
+  itemClass = "",
+} = Astro.props;
+
+const sequence = [...items, ...items];
+---
+
+<div
+  class={`marquee overflow-hidden ${className}`}
+  style={`--marquee-speed:${speed}s`}
+  role="marquee"
+  aria-label={items.join(" · ")}
+>
+  <div class="marquee-track flex w-max items-center whitespace-nowrap">
+    {
+      sequence.map((item) => (
+        <span class={`flex items-center ${itemClass}`}>
+          <span>{item}</span>
+          <span class="mx-4 text-red" aria-hidden="true">
+            {separator}
+          </span>
+        </span>
+      ))
+    }
+  </div>
+</div>

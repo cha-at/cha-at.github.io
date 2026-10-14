@@ -1,0 +1,11 @@
+---
+interface Props {
+  class?: string;
+  variant?: "paper" | "light";
+}
+
+const { class: className = "", variant = "paper" } = Astro.props;
+const color = variant === "paper" ? "text-ink/50" : "text-white/60";
+---
+
+<span class={`pointer-events-none absolute font-mono text-[13px] leading-none ${color} ${className}`} aria-hidden="true">+</span>
