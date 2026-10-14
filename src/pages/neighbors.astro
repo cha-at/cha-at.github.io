@@ -1,0 +1,74 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Footer from "../components/Footer.astro";
+import { site, neighbors } from "../data/site";
+---
+
+<Layout
+  title={`NETWORK NEIGHBORHOOD — ${site.title}`}
+  description="Websites of friends, kept the old way: name in, name out, no algorithm in between."
+  taskLabel="C:\NEIGHBORS — 网上邻居"
+  taskHref="/"
+>
+  <main id="main" class="px-4 pb-24 pt-20 sm:px-8 md:px-12">
+    <div class="mx-auto max-w-5xl">
+      <nav class="mb-6 flex items-baseline gap-1.5 font-mono text-[11px] tracking-widest text-win-shadow" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-red" data-cursor="link" data-snd="click">C:\</a>
+        <span>CHAKERAT</span>
+        <span>\</span>
+        <span class="font-bold text-ink">NEIGHBORS</span>
+        <span class="animate-blink" aria-hidden="true">_</span>
+        <a href="/" class="ml-auto hover:text-red" data-cursor="link" data-snd="click">← HOME</a>
+      </nav>
+
+      <h1 class="sr-only">Neighbors 网上邻居</h1>
+      <SectionHead title="NEIGHBORS" cn="网上邻居 — SWAP LINKS ANYTIME" meta="— THE NETWORK NEIGHBORHOOD" />
+
+      <p class="mb-10 max-w-xl font-sans text-base leading-relaxed text-ink/75 sm:text-lg" data-reveal>
+        Just oldschool link swapping.
+      </p>
+
+      <div class="border-t border-ink/15" data-reveal style="--i: 1">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            neighbors.map((n, i) => (
+              <li class={i > 0 ? "border-t border-ink/15 sm:border-t-0 sm:border-l" : ""}>
+                <a
+                  href={n.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group flex h-full flex-col justify-between gap-8 px-1 py-6 transition-colors hover:bg-ink hover:text-paper sm:px-5"
+                  data-snd="click"
+                  data-cursor="link"
+                >
+                  <div class="flex items-start justify-between gap-3 font-mono text-[10px] tracking-[0.25em] text-win-shadow group-hover:text-paper/60">
+                    <span>NEIGHBOR {String(i + 1).padStart(2, "0")}</span>
+                    <span aria-hidden="true">↗</span>
+                  </div>
+                  <p class="font-sans text-base font-bold leading-snug tracking-tight sm:text-lg">{n.name}</p>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <p class="mt-8 font-mono text-xs leading-relaxed text-ink/70" data-reveal style="--i: 2">
+        WARNING: We are not responsible for the
+        <button
+          type="button"
+          class="redacted-toggle mx-1 inline-block min-w-20 cursor-pointer bg-ink px-2 text-transparent align-baseline select-none hover:bg-red focus-visible:bg-red"
+          data-redacted="[REDACTED]"
+          data-cursor="link"
+          data-snd="click"
+          aria-label="REDACTED"
+        >
+          ████████
+        </button>
+        that may occur.
+      </p>
+    </div>
+  </main>
+  <Footer backHref="/" />
+</Layout>

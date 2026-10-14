@@ -18,9 +18,8 @@ export const bootLines = [
 export const sections = [
   { id: "about", num: "01", title: "ABOUT", cn: "关于" },
   { id: "archive", num: "02", title: "THE ARCHIVE", cn: "档案柜" },
-  { id: "neighbors", num: "03", title: "NEIGHBORS", cn: "网上邻居" },
-  { id: "workbench", num: "04", title: "THE WORKBENCH", cn: "工作台" },
-  { id: "guestbook", num: "05", title: "USELESS GUESTBOOK", cn: "留言区" },
+  { id: "workbench", num: "03", title: "THE WORKBENCH", cn: "工作台" },
+  { id: "guestbook", num: "04", title: "USELESS GUESTBOOK", cn: "留言区" },
 ] as const;
 
 export const socials = [
@@ -32,10 +31,10 @@ export const socials = [
 ] as const;
 
 export const neighbors = [
-  { name: "NinJATE 的神秘博客", subtitle: "NinJATE's mystery blog", href: "https://ninjate11.github.io/" },
-  { name: "某种烧饼", subtitle: "some kind of shaobing", href: "https://qwq9scan114514.github.io/" },
-  { name: "Colin 的博客", subtitle: "Colin's blog", href: "https://qsdwindows.qzz.io/" },
-  { name: "Asutaka 的小站", subtitle: "Asutaka's little station", href: "https://www.asutaka.ink" },
+  { name: "NinJATE 的神秘博客", href: "https://ninjate11.github.io/" },
+  { name: "某种烧饼", href: "https://qwq9scan114514.github.io/" },
+  { name: "Colin 的博客", href: "https://qsdwindows.qzz.io/" },
+  { name: "Asutaka 的小站", href: "https://www.asutaka.ink" },
 ] as const;
 
 export const aboutFacts = [
