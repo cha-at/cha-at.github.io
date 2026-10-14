@@ -15,14 +15,12 @@ export const bootLines = [
   "READY - EVERYTHING DONE",
 ] as const;
 
-export const tickerLines = [
-  "WELCOME TO THE CYBER NEST",
-  "欢迎光临",
-  "BEST VIEWED WITH LOVE",
-  "Y2K COMPLIANT",
-  "SIGN THE GUESTBOOK",
-  "40PX GRID NATIVE",
-  "NO FRAMES WERE HARMED",
+export const sections = [
+  { id: "about", num: "01", title: "ABOUT", cn: "关于" },
+  { id: "archive", num: "02", title: "THE ARCHIVE", cn: "档案柜" },
+  { id: "neighbors", num: "03", title: "NEIGHBORS", cn: "网上邻居" },
+  { id: "workbench", num: "04", title: "THE WORKBENCH", cn: "工作台" },
+  { id: "guestbook", num: "05", title: "USELESS GUESTBOOK", cn: "留言区" },
 ] as const;
 
 export const socials = [

@@ -1,14 +1,10 @@
 ---
 import SectionHead from "./SectionHead.astro";
 import ArchiveWindow from "./ArchiveWindow.astro";
-import { archiveEntries } from "../data/site";
 ---
 
-<section id="archive" class="relative overflow-hidden bg-teal px-4 py-16 text-white sm:px-8 md:px-12 md:py-24">
+<section id="archive" class="relative overflow-hidden bg-teal px-4 py-12 text-white sm:px-8 md:px-12 md:py-16">
   <div class="archive-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute inset-0 flex flex-col justify-center overflow-hidden opacity-[0.07]" aria-hidden="true">
-    <span class="whitespace-nowrap text-right font-display uppercase leading-none" style="--doto-weight: 900; font-size: 19vw;">ARCHIVE</span>
-  </div>
 
   <div class="relative mx-auto max-w-7xl">
     <SectionHead number="02" title="THE ARCHIVE" cn="档案柜 — KEEP FOREVER, SORT NEVER" meta="— THE DRAWER" invert />
@@ -36,15 +32,6 @@ import { archiveEntries } from "../data/site";
           PULL THE DRAWER OUT
           <span aria-hidden="true" class="text-win-shadow transition-transform group-hover:translate-x-0.5">►</span>
         </button>
-        <span class="font-mono text-[11px] text-white/60">{archiveEntries.length} ITEMS / ∞ PATIENCE</span>
-      </div>
-    </div>
-
-    <div class="relative mt-14 border-t border-white/25 pt-3 font-mono text-[11px] text-white/70" data-reveal style="--i: 3">
-      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <span>DRAWER STATUS: CLOSED</span>
-        <span class="hidden sm:inline">MOUNTED AT C:\CHAKERAT\ARCHIVE</span>
-        <span><span class="text-red">●</span> SAFE TO OPEN</span>
       </div>
     </div>
 

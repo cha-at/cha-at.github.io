@@ -11,16 +11,15 @@ const { number, title, cn, meta, invert = false } = Astro.props;
 ---
 
 <div class="mb-10 md:mb-14">
-  <div class={`flex items-baseline justify-between border-b-2 pb-2 font-mono text-[11px] tracking-widest ${invert ? "border-white/40 text-white/70" : "border-ink text-win-shadow"}`}>
+  <div class={`border-b-2 pb-2 font-mono text-[11px] tracking-widest ${invert ? "border-white/40 text-white/70" : "border-ink text-win-shadow"}`}>
     <span>
       SEC.{number} {meta && <span class={invert ? "text-white/50" : "text-win-shadow"}>{meta}</span>}
     </span>
-    <span class={invert ? "text-white/50" : "text-win-shadow"}>DAT 1998.10.12</span>
   </div>
   <div class="mt-4 flex flex-wrap items-end gap-x-6 gap-y-2">
     <span
       class="font-display leading-none sm:leading-none"
-      style="--doto-weight: 900; font-size: clamp(4.5rem, 13vw, 11rem);"
+      style="--doto-weight: 700; font-size: clamp(2.5rem, 5vw, 4rem);"
       aria-hidden="true"
       data-reveal
       >{number}</span

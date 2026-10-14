@@ -13,7 +13,11 @@ export function initArchive(): void {
   const maxBtn = dialog.querySelector<HTMLButtonElement>("[data-window-max]");
   const statusEl = document.getElementById("archive-status");
 
-  const desktopQuery = window.matchMedia("(min-width: 1024px) and (pointer: fine)");
+  /* Floating mode is a function of viewport size, not pointer type — a
+     Surface in tablet mode reports coarse primary pointer but still gets the
+     draggable window (pointer events handle touch; touch-action on the
+     titlebar keeps the gesture from scrolling the page). */
+  const desktopQuery = window.matchMedia("(min-width: 1024px)");
   const EDGE = 16; // minimum gap to the viewport sides and bottom
   const TOP_CLEARANCE = 40; // keep clear of the fixed status bar so the title bar stays reachable
 

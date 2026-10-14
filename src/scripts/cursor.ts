@@ -2,9 +2,14 @@ const LERP = 0.16;
 const RING_SIZE = 30;
 
 export function initCursor(): void {
-  const finePointer = window.matchMedia("(pointer: fine)").matches;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!finePointer || reduced) return;
+  /* Hybrid devices (Surface etc.) may report touch as the *primary* pointer
+     while a mouse/pen is used — any-pointer covers those. Touch-only large
+     screens still get the lens: it follows taps and drags. Narrow phones
+     stay cursor-free. */
+  const finePointer = window.matchMedia("(any-pointer: fine)").matches;
+  const bigScreen = window.matchMedia("(min-width: 1024px)").matches;
+  if ((!finePointer && !bigScreen) || reduced) return;
 
   const cross = document.createElement("div");
   cross.className = "cursor-cross";
@@ -44,7 +49,18 @@ export function initCursor(): void {
   window.addEventListener(
     "pointermove",
     (event) => {
-      if (event.pointerType !== "mouse") return;
+      targetX = event.clientX;
+      targetY = event.clientY;
+      show();
+    },
+    { passive: true },
+  );
+
+  /* A touch tap produces no pointermove — without this the ring never
+     appears on touch-only screens. */
+  window.addEventListener(
+    "pointerdown",
+    (event) => {
       targetX = event.clientX;
       targetY = event.clientY;
       show();

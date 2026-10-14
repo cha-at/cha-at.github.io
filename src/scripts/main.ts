@@ -5,10 +5,10 @@ import { initArchive } from "./drag";
 import { initEggs } from "./eggs";
 import { initNavFeedback } from "./navFeedback";
 import { initReveal } from "./reveal";
+import { initStartMenu } from "./startMenu";
 
 function initStatusBar(): void {
   const clock = document.getElementById("live-clock");
-  const coords = document.getElementById("coord-tracker");
   const sndToggle = document.getElementById("snd-toggle");
   const sndLabel = document.getElementById("snd-label");
   const sndLed = document.getElementById("snd-led");
@@ -20,22 +20,6 @@ function initStatusBar(): void {
   };
   tick();
   window.setInterval(tick, 1000);
-
-  const finePointer = window.matchMedia("(pointer: fine)").matches;
-  if (coords && finePointer) {
-    window.addEventListener(
-      "pointermove",
-      (event) => {
-        if (event.pointerType !== "mouse") return;
-        const x = Math.round(event.clientX);
-        const y = Math.round(event.clientY);
-        coords.textContent = `X:${String(x).padStart(4, "0")} Y:${String(y).padStart(4, "0")}`;
-      },
-      { passive: true },
-    );
-  } else if (coords) {
-    coords.closest("span")?.remove();
-  }
 
   if (sndToggle && sndLabel) {
     const render = (): void => {
@@ -74,6 +58,7 @@ function boot(): void {
   initBoot();
   initCursor();
   initStatusBar();
+  initStartMenu();
   initArchive();
   initEggs();
   initReveal();

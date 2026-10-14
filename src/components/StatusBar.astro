@@ -1,46 +1,84 @@
 ---
-import { site } from "../data/site";
+import { sections } from "../data/site";
 ---
 
 <header
   class="fixed inset-x-0 top-0 z-[var(--z-statusbar)] flex h-8 items-stretch gap-px bg-face bevel font-mono text-[11px] text-ink [view-transition-name:statusbar]"
 >
+  <div class="relative flex items-stretch gap-px">
+    <button
+      id="start-button"
+      type="button"
+      class="flex shrink-0 items-center gap-2 px-3 font-bold tracking-wider bevel-thin hover:bg-face-light"
+      aria-haspopup="menu"
+      aria-controls="start-menu"
+      aria-expanded="false"
+      data-cursor="link"
+      data-snd="click"
+    >
+      <span class="inline-block h-2.5 w-2.5 bg-red" aria-hidden="true"></span>
+      <span>START</span>
+    </button>
+
+    <div
+      id="start-menu"
+      hidden
+      role="menu"
+      aria-label="Sections"
+      class="absolute left-0 top-full z-[var(--z-menu)] w-64 bg-face bevel"
+    >
+      <div class="flex">
+        <div
+          class="flex w-7 shrink-0 items-end justify-center bg-gradient-to-b from-navy to-navy-light pb-2"
+          aria-hidden="true"
+        >
+          <span
+            class="rotate-180 whitespace-nowrap font-sans text-[11px] font-bold tracking-[0.2em] text-white [writing-mode:vertical-rl]"
+            >CYBER NEST 98</span
+          >
+        </div>
+        <ul class="min-w-56 py-1">
+          {
+            sections.map((s) => (
+              <li role="none">
+                <a
+                  role="menuitem"
+                  href={`#${s.id}`}
+                  data-section-link
+                  data-cursor="link"
+                  data-snd="click"
+                  class="group flex items-baseline gap-3 whitespace-nowrap px-3 py-2 hover:bg-navy hover:text-white focus-visible:bg-navy focus-visible:text-white focus-visible:outline-none"
+                >
+                  <span class="w-5 shrink-0 font-bold text-red group-hover:text-white">{s.num}</span>
+                  <span class="font-bold tracking-wide">{s.title}</span>
+                  <span class="ml-auto text-[10px] tracking-widest text-win-shadow group-hover:text-white/70">
+                    {s.cn}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <a
-    href="#hero"
-    class="flex shrink-0 items-center gap-2 px-3 font-bold tracking-wider hover:bg-face-light"
+    id="task-button"
+    href="#about"
+    class="max-w-72 items-center truncate px-3 bevel-thin-in hover:bg-face-light"
     data-cursor="link"
     data-snd="click"
   >
-    <span class="inline-block h-2.5 w-2.5 bg-red"></span>
-    <span>{site.name.toUpperCase()}</span>
+    <span id="task-button-label" class="truncate"></span>
   </a>
 
-  <span class="relative hidden min-w-0 flex-1 overflow-hidden bg-face sm:block" aria-hidden="true">
-    <span class="absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-face to-transparent"></span>
-    <span class="absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-face to-transparent"></span>
-    <span class="statusbar-marquee absolute inset-y-0 flex items-center whitespace-nowrap">
-      <span class="px-2">C:\CHAKERAT\CYBER_NEST\</span>
-      <span class="px-2 text-red">REV 98.09</span>
-      <span class="px-2">12-COL MODULAR GRID</span>
-      <span class="px-2">NORM 1957.68-REV98</span>
-      <span class="px-2 text-red">WELCOME 欢迎</span>
-      <span class="px-2">C:\CHAKERAT\CYBER_NEST\</span>
-      <span class="px-2 text-red">REV 98.09</span>
-      <span class="px-2">12-COL MODULAR GRID</span>
-      <span class="px-2">NORM 1957.68-REV98</span>
-      <span class="px-2 text-red">WELCOME 欢迎</span>
-    </span>
-  </span>
-
-  <span class="hidden items-center gap-2 px-3 lg:flex">
-    <span class="text-win-shadow">POS</span>
-    <span id="coord-tracker" class="tabular-nums">X:0000 Y:0000</span>
-  </span>
+  <span class="flex-1" aria-hidden="true"></span>
 
   <button
     id="snd-toggle"
     type="button"
-    class="flex shrink-0 items-center gap-2 px-3 font-bold hover:bg-face-light bevel-thin"
+    class="flex shrink-0 items-center gap-2 px-3 font-bold bevel-thin hover:bg-face-light"
     aria-pressed="false"
     data-cursor="link"
     title="Toggle synthesized UI sounds"
@@ -49,24 +87,19 @@ import { site } from "../data/site";
     <span id="snd-label">SND: OFF</span>
   </button>
 
-  <span class="flex shrink-0 items-center px-3 tabular-nums" aria-hidden="true">
+  <span class="hidden shrink-0 items-center px-3 tabular-nums sm:flex" aria-hidden="true">
     <span id="live-clock">--:--</span>
   </span>
 </header>
 
 <style>
-  .statusbar-marquee {
-    animation: statusbar-scroll 41s linear infinite;
+  #task-button {
+    display: none;
   }
 
-  @keyframes statusbar-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .statusbar-marquee {
-      animation: none !important;
+  @media (min-width: 640px) {
+    #task-button.is-active {
+      display: flex;
     }
   }
 </style>
