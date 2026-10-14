@@ -74,14 +74,7 @@ export function initArchive(): void {
     returnFocus = trigger;
     wrap!.hidden = false;
     offset = { x: 0, y: 0 }; // every open starts centered
-    if (desktopQuery.matches) {
-      document.body.appendChild(wrap!);
-      base = computeBase();
-      applyOffset();
-      setStatus("DRAG THE TITLE BAR");
-    } else {
-      setStatus("OPEN");
-    }
+    setStatus("OPENED");
     dialog!.animate(
       [
         { opacity: 0, transform: "scale(0.97)" },
@@ -119,12 +112,12 @@ export function initArchive(): void {
     if (maximized) {
       wrap!.classList.add("is-maximized");
       wrap!.style.transform = "none";
-      setStatus("MAXIMIZED — PRESS □ AGAIN TO RESTORE");
+      setStatus("MAXIMIZED");
     } else {
       wrap!.classList.remove("is-maximized");
       base = computeBase();
       applyOffset();
-      setStatus("DRAG THE TITLE BAR");
+      setStatus("RESTORED");
     }
     play("click");
   });

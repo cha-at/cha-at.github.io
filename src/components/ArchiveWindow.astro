@@ -6,7 +6,7 @@ const articles = (await getCollection("articles")).sort(
 );
 const links = await getCollection("collections");
 
-const total = articles.length + links.length;
+const total = articles.length;
 const bytes = JSON.stringify([articles.map((a) => a.data), links.map((l) => l.data)]).length.toLocaleString("en-US");
 const latest = articles.slice(0, 3);
 const stamp = (d: Date) =>
@@ -59,8 +59,8 @@ const stamp = (d: Date) =>
       </div>
     </div>
 
-    <div class="hidden items-center gap-4 border-b border-win-shadow px-2 py-0.5 font-mono text-[11px] md:flex" aria-hidden="true">
-      <span>文件(F)</span><span>排印(T)</span><span>网格(G)</span><span>帮助(H)</span>
+    <div class="hidden items-center gap-4 border-b border-win-shadow px-2 py-0.5 font-mono text-[11px] md:flex select-none" aria-hidden="true">
+      <span>文件(F)</span><span>编辑(E)</span><span>视图(V)</span><span>帮助(H)</span>
     </div>
 
     <div class="p-2 sm:p-3">
@@ -72,7 +72,7 @@ const stamp = (d: Date) =>
               EVERYTHING, EVENTUALLY
             </p>
           </div>
-          <span class="hidden font-mono text-[10px] text-win-shadow sm:block">{total} OBJECTS<br />2 DIRS</span>
+          <span class="hidden font-mono text-[10px] text-win-shadow sm:block">{total} OBJECTS</span>
         </div>
 
         <ul class="space-y-1">
@@ -96,24 +96,6 @@ const stamp = (d: Date) =>
               </li>
             ))
           }
-          <li
-            class="group flex items-baseline gap-3 border-b border-dashed border-ink/15 px-1 py-2.5 font-mono text-xs transition-colors last:border-b-0 hover:bg-paper"
-            data-reveal
-            style="--i:3"
-          >
-            <span class="shrink-0 font-bold text-red">????</span>
-            <button
-              type="button"
-              class="redacted-toggle min-w-24 cursor-pointer truncate bg-ink px-2 py-0.5 text-left text-transparent select-none"
-              data-cursor="link"
-              data-snd="click"
-              aria-label="Redacted file — click to reveal a hint"
-            >
-              ████████████
-            </button>
-            <span class="hidden flex-1 truncate text-win-shadow md:inline">ask nicely and we will talk.</span>
-            <span class="ml-auto shrink-0 text-win-shadow md:ml-0">???</span>
-          </li>
         </ul>
       </div>
 
