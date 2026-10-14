@@ -38,11 +38,11 @@ export const neighbors = [
 ] as const;
 
 export const aboutFacts = [
-  { k: "LOCATION", v: "somewhere on the open web" },
-  { k: "STATUS", v: "browsing" },
-  { k: "UPTIME", v: "since the dial-up era" },
-  { k: "STACK", v: "HTML, habits, hope" },
-  { k: "FAVORITE PROTOCOL", v: "http:// forever" },
+  { k: "LOCATION", v: "somewhere on the internet" },
+  { k: "STATUS", v: "living (probably)" },
+  { k: "DEVICE", v: "Nothing Phone (3a) Pro" },
+  { k: "MUSIC GENRE", v: "Alt Rock, and maybe some Pop" },
+  { k: "FAVORITE GAME", v: "BONELAB, Project Sekai" },
 ] as const;
 
 // Currently unused
