@@ -8,12 +8,16 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  taskLabel?: string;
+  taskHref?: string;
 }
 
 const {
   title = `${site.title}`,
   description = site.description,
   ogImage = "/og.png",
+  taskLabel,
+  taskHref = "/",
 } = Astro.props;
 ---
 
@@ -52,7 +56,7 @@ const {
   </head>
   <body class="min-h-screen bg-paper font-sans text-ink antialiased">
     <BootScreen />
-    <StatusBar />
+    <StatusBar taskLabel={taskLabel} taskHref={taskHref} />
     <slot />
     <script>
       import "../scripts/main";

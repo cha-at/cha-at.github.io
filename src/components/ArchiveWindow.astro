@@ -1,5 +1,16 @@
 ---
-import { archiveEntries } from "../data/site";
+import { getCollection } from "astro:content";
+
+const articles = (await getCollection("articles")).sort(
+  (a, b) => b.data.updated.valueOf() - a.data.updated.valueOf(),
+);
+const links = await getCollection("collections");
+
+const total = articles.length + links.length;
+const bytes = JSON.stringify([articles.map((a) => a.data), links.map((l) => l.data)]).length.toLocaleString("en-US");
+const latest = articles.slice(0, 3);
+const stamp = (d: Date) =>
+  `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getFullYear()).slice(2)}`;
 ---
 
 <div id="archive-window" class="archive-window-wrap" hidden>
@@ -61,45 +72,65 @@ import { archiveEntries } from "../data/site";
               EVERYTHING, EVENTUALLY
             </p>
           </div>
-          <span class="hidden font-mono text-[10px] text-win-shadow sm:block">4 OBJECTS<br />0.13 MB</span>
+          <span class="hidden font-mono text-[10px] text-win-shadow sm:block">{total} OBJECTS<br />2 DIRS</span>
         </div>
 
         <ul class="space-y-1">
           {
-            archiveEntries.map((entry, i) => (
+            latest.map((entry, i) => (
               <li
                 class="group flex items-baseline gap-3 border-b border-dashed border-ink/15 px-1 py-2.5 font-mono text-xs transition-colors last:border-b-0 hover:bg-paper"
                 data-reveal
                 style={`--i:${i}`}
               >
-                <span class={`shrink-0 font-bold ${entry.redacted ? "text-red" : "text-win-shadow"}`}>{entry.id}</span>
-                {entry.redacted ? (
-                  <button
-                    type="button"
-                    class="redacted-toggle min-w-24 cursor-pointer truncate bg-ink px-2 py-0.5 text-left text-transparent select-none"
-                    data-cursor="link"
-                    data-snd="click"
-                    aria-label="Redacted file — click to reveal a hint"
-                  >
-                    ████████████
-                  </button>
-                ) : (
-                  <span class="truncate font-bold text-ink group-hover:text-red">{entry.title}</span>
-                )}
-                <span class="hidden flex-1 truncate text-win-shadow md:inline">{entry.note}</span>
-                <span class="ml-auto shrink-0 text-win-shadow md:ml-0">{entry.size}</span>
+                <span class="shrink-0 tabular-nums text-win-shadow">{stamp(entry.data.updated)}</span>
+                <a
+                  href={`/archive/articles/${entry.id}`}
+                  class="min-w-0 truncate font-bold text-ink group-hover:text-red"
+                  data-cursor="link"
+                  data-snd="click"
+                >
+                  {entry.data.title}
+                </a>
+                <span class="ml-auto shrink-0 font-bold text-red">{entry.data.type.toUpperCase()}</span>
               </li>
             ))
           }
+          <li
+            class="group flex items-baseline gap-3 border-b border-dashed border-ink/15 px-1 py-2.5 font-mono text-xs transition-colors last:border-b-0 hover:bg-paper"
+            data-reveal
+            style="--i:3"
+          >
+            <span class="shrink-0 font-bold text-red">????</span>
+            <button
+              type="button"
+              class="redacted-toggle min-w-24 cursor-pointer truncate bg-ink px-2 py-0.5 text-left text-transparent select-none"
+              data-cursor="link"
+              data-snd="click"
+              aria-label="Redacted file — click to reveal a hint"
+            >
+              ████████████
+            </button>
+            <span class="hidden flex-1 truncate text-win-shadow md:inline">ask nicely and we will talk.</span>
+            <span class="ml-auto shrink-0 text-win-shadow md:ml-0">???</span>
+          </li>
         </ul>
       </div>
 
       <div class="mt-2 flex items-center gap-2">
         <div class="flex flex-1 items-center justify-between bg-face px-2 py-1 font-mono text-[10px] text-ink bevel-in">
           <span id="archive-status">STATUS: READY</span>
-          <span aria-hidden="true">BYTES: 136,192</span>
+          <span aria-hidden="true">BYTES: {bytes}</span>
           <span class="font-bold text-red" aria-hidden="true">100%</span>
         </div>
+        <a
+          href="/archive"
+          class="shrink-0 bg-face px-3 py-1.5 font-mono text-[10px] font-bold tracking-wider text-ink bevel-thin hover:bg-face-light active:bevel-thin-in"
+          data-cursor="link"
+          data-snd="click"
+        >
+          OPEN FULL ARCHIVE ►
+        </a>
       </div>
     </div>
 

@@ -1,0 +1,174 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Footer from "../../../components/Footer.astro";
+import { site } from "../../../data/site";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  return articles.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, updated, type } = entry.data;
+
+const all = (await getCollection("articles")).sort(
+  (a, b) => b.data.updated.valueOf() - a.data.updated.valueOf(),
+);
+const idx = all.findIndex((a) => a.id === entry.id);
+const older = all[idx + 1];
+const newer = all[idx - 1];
+
+const meta = `${String(updated.getDate()).padStart(2, "0")}.${String(updated.getMonth() + 1).padStart(2, "0")}.${updated.getFullYear()}`;
+---
+
+<Layout title={`${title} — ${site.title}`}>
+  <main id="main" class="px-4 pb-24 pt-20 sm:px-8 md:px-12">
+    <article class="mx-auto max-w-3xl">
+      <nav class="mb-8 flex flex-wrap items-baseline gap-1.5 font-mono text-[11px] tracking-widest text-win-shadow" aria-label="Breadcrumb">
+        <a href="/archive" class="hover:text-red" data-cursor="link" data-snd="click">← C:\CHAKERAT\ARCHIVE</a>
+        <span>\</span>
+        <span class="font-bold text-ink">{entry.id}.MD</span>
+      </nav>
+
+      <header class="mb-10 border-b-2 border-ink pb-6">
+        <h1 class="font-display leading-none text-ink" style="font-size: clamp(1.9rem, 5vw, 3.2rem); --doto-weight: 700;">{title}</h1>
+        <p class="mt-4 font-mono text-[11px] tracking-widest text-win-shadow">
+          {meta} · <span class="font-bold text-red">{type.toUpperCase()}</span>
+        </p>
+      </header>
+
+      <div class="prose-nest">
+        <Content />
+      </div>
+
+      <nav class="mt-16 flex items-baseline justify-between gap-4 border-t-2 border-ink pt-4 font-mono text-[11px] tracking-widest">
+        {
+          older ? (
+            <a href={`/archive/articles/${older.id}`} class="min-w-0 truncate hover:text-red" data-cursor="link" data-snd="click">
+              ◄ PREV: {older.data.title}
+            </a>
+          ) : (
+            <span class="text-win-shadow/60">◄ END OF TAPE</span>
+          )
+        }
+        {
+          newer ? (
+            <a href={`/archive/articles/${newer.id}`} class="min-w-0 truncate text-right hover:text-red" data-cursor="link" data-snd="click">
+              NEXT: {newer.data.title} ►
+            </a>
+          ) : (
+            <span class="text-right text-win-shadow/60">FRESHLY FILED ►</span>
+          )
+        }
+      </nav>
+    </article>
+  </main>
+  <Footer backHref="/" />
+</Layout>
+
+<style>
+  .prose-nest {
+    max-width: 65ch;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgb(16 16 16 / 0.8);
+  }
+  .prose-nest :global(p) {
+    margin-block: 1.25em 0;
+  }
+  .prose-nest :global(p:first-child) {
+    margin-top: 0;
+  }
+  .prose-nest :global(h2) {
+    margin-block: 2.25em 0.75em;
+    padding-top: 1em;
+    border-top: 2px solid var(--color-ink);
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+  .prose-nest :global(h2)::before {
+    content: "§ ";
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-red);
+  }
+  .prose-nest :global(h3) {
+    margin-block: 1.75em 0.5em;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  .prose-nest :global(a) {
+    color: var(--color-red);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .prose-nest :global(a:hover) {
+    color: var(--color-ink);
+  }
+  .prose-nest :global(blockquote) {
+    margin-block: 1.5em 0;
+    padding: 0.75em 1em;
+    border-left: 2px solid var(--color-ink);
+    background: var(--color-face-light);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+  .prose-nest :global(ul) {
+    margin-block: 1.25em 0;
+    padding-left: 1.25em;
+    list-style: square;
+  }
+  .prose-nest :global(ol) {
+    margin-block: 1.25em 0;
+    padding-left: 1.25em;
+    list-style: decimal;
+  }
+  .prose-nest :global(li) {
+    margin-top: 0.4em;
+  }
+  .prose-nest :global(li::marker) {
+    color: var(--color-red);
+  }
+  .prose-nest :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--color-face-light);
+    padding: 0.1em 0.35em;
+  }
+  .prose-nest :global(pre) {
+    margin-block: 1.75em 0;
+    padding: 1rem 1.25rem !important;
+    overflow-x: auto;
+    box-shadow:
+      inset -1px -1px 0 var(--color-face-light),
+      inset 1px 1px 0 var(--color-win-dark),
+      inset -2px -2px 0 var(--color-win-shadow),
+      inset 2px 2px 0 var(--color-face-light);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  .prose-nest :global(pre code) {
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+  }
+  .prose-nest :global(hr) {
+    margin-block: 2.5em 0;
+    border: 0;
+    border-top: 2px dashed rgb(16 16 16 / 0.3);
+  }
+  .prose-nest :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+  .prose-nest :global(strong) {
+    color: var(--color-ink);
+  }
+</style>

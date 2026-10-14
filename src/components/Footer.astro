@@ -1,6 +1,12 @@
 ---
 import BadgeRow from "./BadgeRow.astro";
 import { footerCredits, site } from "../data/site";
+
+interface Props {
+  backHref?: string;
+}
+
+const { backHref = "#hero" } = Astro.props;
 ---
 
 <footer id="colophon" class="relative border-t-2 border-ink">
@@ -12,7 +18,7 @@ import { footerCredits, site } from "../data/site";
         </p>
         <p class="mt-4 max-w-lg font-sans text-sm leading-relaxed text-ink/75">
           <a
-            href="#hero"
+            href={backHref}
             class="text-ink underline decoration-1 underline-offset-2 hover:text-red"
             data-cursor="link"
             data-snd="click">You can go back to the top now.</a

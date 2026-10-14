@@ -38,13 +38,6 @@ export const neighbors = [
   { name: "Asutaka 的小站", subtitle: "Asutaka's little station", href: "https://www.asutaka.ink" },
 ] as const;
 
-export const archiveEntries = [
-  { id: "2009", title: "my first HTML page", note: "marquee era. comic sans was involved. no regrets.", size: "4 KB" },
-  { id: "2014", title: "penguin blog", note: "three readers, one of them my mom.", size: "12 KB" },
-  { id: "2019", title: "lost flash game archive", note: "the games are gone. the nostalgia remains.", size: "88 KB" },
-  { id: "????", title: "REDACTED FILE", note: "ask nicely and we will talk.", size: "???", redacted: true },
-] as const;
-
 export const aboutFacts = [
   { k: "LOCATION", v: "somewhere on the open web" },
   { k: "STATUS", v: "browsing" },

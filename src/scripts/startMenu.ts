@@ -32,6 +32,12 @@ export function initStartMenu(): void {
       }
     });
 
+    if (window.location.pathname !== "/") {
+      for (const link of menu.querySelectorAll<HTMLAnchorElement>("a[data-section-link]")) {
+        link.setAttribute("href", `/${link.getAttribute("href") ?? "#"}`);
+      }
+    }
+
     for (const link of menu.querySelectorAll<HTMLAnchorElement>("a[data-section-link]")) {
       link.addEventListener("click", () => {
         setOpen(false);
@@ -42,7 +48,7 @@ export function initStartMenu(): void {
 
   const taskBtn = document.getElementById("task-button");
   const taskLabel = document.getElementById("task-button-label");
-  if (!taskBtn || !taskLabel) return;
+  if (!taskBtn || !taskLabel || taskBtn.hasAttribute("data-task-static")) return;
 
   const spy = (): void => {
     let current = "";

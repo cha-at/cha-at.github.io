@@ -1,5 +1,13 @@
 ---
 import { sections } from "../data/site";
+
+interface Props {
+  taskLabel?: string;
+  taskHref?: string;
+}
+
+const { taskLabel, taskHref = "/" } = Astro.props;
+const staticTask = Boolean(taskLabel);
 ---
 
 <header
@@ -65,12 +73,13 @@ import { sections } from "../data/site";
 
   <a
     id="task-button"
-    href="#about"
-    class="max-w-72 items-center truncate px-3 bevel-thin-in hover:bg-face-light"
+    href={staticTask ? taskHref : "#about"}
+    class:list={["max-w-72 items-center truncate px-3 bevel-thin-in hover:bg-face-light", { "is-active": staticTask }]}
+    data-task-static={staticTask ? "1" : undefined}
     data-cursor="link"
     data-snd="click"
   >
-    <span id="task-button-label" class="truncate"></span>
+    <span id="task-button-label" class="truncate">{staticTask ? taskLabel : ""}</span>
   </a>
 
   <span class="flex-1" aria-hidden="true"></span>

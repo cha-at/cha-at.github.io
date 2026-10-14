@@ -1,0 +1,155 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import Footer from "../../components/Footer.astro";
+import { site } from "../../data/site";
+import { getCollection } from "astro:content";
+
+const articles = (await getCollection("articles")).sort(
+  (a, b) => b.data.updated.valueOf() - a.data.updated.valueOf(),
+);
+const links = (await getCollection("collections")).sort((a, b) =>
+  a.id.localeCompare(b.id),
+);
+
+const byYear = new Map<number, typeof articles>();
+for (const entry of articles) {
+  const year = entry.data.updated.getFullYear();
+  const bucket = byYear.get(year);
+  if (bucket) bucket.push(entry);
+  else byYear.set(year, [entry]);
+}
+const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
+
+const types = [...new Set(articles.map((entry) => entry.data.type))].sort();
+
+const stamp = (d: Date) =>
+  `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}`;
+const domainOf = (u: string) => new URL(u).hostname.replace(/^www\./, "");
+---
+
+<Layout
+  title={`THE ARCHIVE 档案柜 — ${site.title}`}
+  description="The full archive: articles on a timeline, links in a drawer. Kept forever, sorted never."
+  taskLabel="C:\ARCHIVE — 档案柜"
+  taskHref="/"
+>
+  <main id="main" class="px-4 pb-24 pt-20 sm:px-8 md:px-12">
+    <div class="mx-auto max-w-5xl">
+      <nav class="mb-6 flex items-baseline gap-1.5 font-mono text-[11px] tracking-widest text-win-shadow" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-red" data-cursor="link" data-snd="click">C:\</a>
+        <span>CHAKERAT</span>
+        <span>\</span>
+        <span class="font-bold text-ink">ARCHIVE</span>
+        <span class="animate-blink" aria-hidden="true">_</span>
+        <a href="/" class="ml-auto hover:text-red" data-cursor="link" data-snd="click">← HOME</a>
+      </nav>
+
+      <h1 class="sr-only">The Archive 档案柜</h1>
+      <SectionHead number="02" title="THE ARCHIVE" cn="档案柜 — KEEP FOREVER, SORT NEVER" meta="— FULL LISTING" />
+
+      <p class="mb-10 font-mono text-[11px] tracking-widest text-win-shadow" data-reveal>
+        {articles.length} ARTICLES / {links.length} LINKS
+      </p>
+
+      <section id="articles" aria-label="Articles timeline">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3 border-b-2 border-ink pb-2">
+          <h2 class="font-display text-2xl leading-none text-ink" style="--doto-weight: 700;">ARTICLES .MD</h2>
+          <label class="flex items-center gap-2 font-mono text-[11px] tracking-widest text-win-shadow">
+            FILTER:
+            <select id="type-filter" class="bg-face px-2 py-1 font-mono text-xs text-ink bevel-thin">
+              <option value="">ALL</option>
+              {types.map((t) => <option value={t}>{t.toUpperCase()}</option>)}
+            </select>
+          </label>
+        </div>
+
+        {
+          years.map(([year, items]) => (
+            <div class="mb-10" data-year-group>
+              <div class="flex items-baseline gap-4 border-b border-dashed border-ink/30 pb-1.5 font-mono text-[11px] tracking-widest text-win-shadow">
+                <span class="font-display text-xl leading-none text-ink" style="--doto-weight: 700;">
+                  {year}
+                </span>
+                <span>{items.length} ENTRIES</span>
+                <span class="ml-auto hidden sm:block">C:\CHAKERAT\ARCHIVE\{year}</span>
+              </div>
+              <ul>
+                {items.map((entry, i) => (
+                  <li
+                    class="border-b border-dashed border-ink/15 last:border-b-0"
+                    data-reveal
+                    style={`--i:${i}`}
+                    data-type={entry.data.type}
+                  >
+                    <a
+                      href={`/archive/articles/${entry.id}`}
+                      class="group flex items-baseline gap-3 px-1 py-3 font-mono text-xs transition-colors hover:bg-face-light"
+                      data-cursor="link"
+                      data-snd="click"
+                    >
+                      <span class="w-11 shrink-0 tabular-nums text-win-shadow">{stamp(entry.data.updated)}</span>
+                      <span class="min-w-0 truncate font-bold text-ink group-hover:text-red">{entry.data.title}</span>
+                      <span class="ml-auto shrink-0 font-bold text-red">{entry.data.type.toUpperCase()}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+
+        {articles.length === 0 && <p class="py-6 font-mono text-xs text-win-shadow">EMPTY FOLDER — 0 OBJECTS</p>}
+      </section>
+
+      <section id="links" class="mt-16" aria-label="Collected links">
+        <div class="mb-4 flex flex-wrap items-baseline justify-between gap-3 border-b-2 border-ink pb-2">
+          <h2 class="font-display text-2xl leading-none text-ink" style="--doto-weight: 700;">LINKS 收藏</h2>
+          <span class="font-mono text-[11px] tracking-widest text-win-shadow">C:\CHAKERAT\ARCHIVE\LINKS</span>
+        </div>
+        <ul>
+          {
+            links.map((entry, i) => (
+              <li class="border-b border-dashed border-ink/15 last:border-b-0" data-reveal style={`--i:${i}`}>
+                <a
+                  href={entry.data.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group flex items-baseline gap-3 px-1 py-2.5 font-mono text-xs transition-colors hover:bg-face-light"
+                  data-cursor="link"
+                  data-snd="click"
+                >
+                  <span class="min-w-0 truncate font-bold text-ink group-hover:text-red">{domainOf(entry.data.url)}</span>
+                  <span class="hidden min-w-0 flex-1 truncate text-win-shadow md:inline">{entry.data.note ?? "—"}</span>
+                  <span class="ml-auto shrink-0 text-win-shadow" aria-hidden="true">
+                    .URL <span class="font-bold text-red">↗</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        {links.length === 0 && <p class="py-6 font-mono text-xs text-win-shadow">EMPTY FOLDER — 0 OBJECTS</p>}
+      </section>
+    </div>
+  </main>
+  <Footer backHref="/" />
+</Layout>
+
+<script>
+  const filter = document.getElementById("type-filter") as HTMLSelectElement | null;
+  if (filter) {
+    const rows = document.querySelectorAll<HTMLElement>("#articles [data-type]");
+    const groups = document.querySelectorAll<HTMLElement>("#articles [data-year-group]");
+    filter.addEventListener("change", () => {
+      const value = filter.value;
+      for (const row of rows) {
+        row.classList.toggle("hidden", value !== "" && row.dataset.type !== value);
+      }
+      for (const group of groups) {
+        const visible = group.querySelectorAll<HTMLElement>("[data-type]:not(.hidden)");
+        group.classList.toggle("hidden", visible.length === 0);
+      }
+    });
+  }
+</script>
