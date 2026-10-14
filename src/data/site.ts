@@ -41,7 +41,7 @@ export const aboutFacts = [
   { k: "LOCATION", v: "somewhere on the internet" },
   { k: "STATUS", v: "living (probably)" },
   { k: "DEVICE", v: "Nothing Phone (3a) Pro" },
-  { k: "MUSIC GENRE", v: "Alt Rock, and maybe some Pop" },
+  { k: "MUSIC GENRE", v: "Alternative" },
   { k: "FAVORITE GAME", v: "BONELAB, Project Sekai" },
 ] as const;
 
