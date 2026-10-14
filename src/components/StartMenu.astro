@@ -1,0 +1,153 @@
+---
+import { getCollection } from "astro:content";
+import { startMenu, type StartMenuItem } from "../data/menu";
+import StartIcon from "./StartIcon.astro";
+
+const recent = (await getCollection("articles")).sort(
+  (a, b) => b.data.updated.valueOf() - a.data.updated.valueOf(),
+);
+
+const row =
+  "group flex items-center gap-2.5 whitespace-nowrap px-2.5 py-1.5 font-bold tracking-wide hover:bg-navy hover:text-white focus-visible:bg-navy focus-visible:text-white focus-visible:outline-none";
+const sep = "mx-1 my-0.5 border-t border-win-shadow border-b border-b-face-light";
+
+type RenderItem = Extract<StartMenuItem, { type: "link" | "submenu" | "action" }> & {
+  pre: string;
+  letter: string;
+  post: string;
+};
+
+const items: (StartMenuItem | RenderItem)[] = startMenu.map((item) => {
+  if (item.type === "sep") return item;
+  const at = item.accel ?? 0;
+  return { ...item, pre: item.label.slice(0, at), letter: item.label.charAt(at), post: item.label.slice(at + 1) };
+});
+---
+
+<div
+  id="start-menu"
+  hidden
+  role="menu"
+  aria-label="Start menu"
+  class="absolute left-0 top-full z-[var(--z-menu)] w-64 bg-face bevel"
+>
+  <div class="flex">
+    <div
+      class="flex w-7 shrink-0 items-end justify-center bg-gradient-to-b from-black via-navy to-navy-light pb-2"
+      aria-hidden="true"
+    >
+      <span
+        class="rotate-180 whitespace-nowrap font-sans text-[11px] font-bold tracking-[0.2em] text-white [writing-mode:vertical-rl] select-none"
+        >OPERATION SYSTEM</span
+      >
+    </div>
+    <ul class="min-w-56 py-1">
+      {
+        items.map((item) => {
+          if (item.type === "sep") {
+            return <li role="none" class={sep} aria-hidden="true" />;
+          }
+          if (item.type === "action") {
+            return (
+              <li role="none">
+                <button
+                  type="button"
+                  role="menuitem"
+                  data-menu-action={item.action}
+                  data-cursor="link"
+                  class:list={[row, "w-full text-left"]}
+                >
+                  <StartIcon name={item.icon} />
+                  <span>
+                    {item.pre}
+                    <u>{item.letter}</u>
+                    {item.post}
+                  </span>
+                </button>
+              </li>
+            );
+          }
+          if (item.type === "submenu") {
+            return (
+              <li role="none" class="relative" data-submenu>
+                <a
+                  role="menuitem"
+                  href={item.href}
+                  data-submenu-trigger
+                  aria-haspopup="menu"
+                  aria-expanded="false"
+                  data-cursor="link"
+                  data-snd="click"
+                  class={row}
+                >
+                  <StartIcon name={item.icon} />
+                  <span>
+                    {item.pre}
+                    <u>{item.letter}</u>
+                    {item.post}
+                  </span>
+                  <span class="ml-auto flex items-center pl-3 text-ink" aria-hidden="true">
+                    <svg class="h-2 w-1" viewBox="0 0 4 8">
+                      <path d="M0 0v8l4-4z" fill="currentColor" />
+                    </svg>
+                  </span>
+                </a>
+                <ul
+                  role="menu"
+                  aria-label="Recent articles"
+                  hidden
+                  class="absolute left-full top-0 z-[var(--z-menu)] w-60 bg-face bevel py-1"
+                >
+                  <li role="none">
+                    <a role="menuitem" href={item.href} data-cursor="link" data-snd="click" class={row}>
+                      <StartIcon name="folder" />
+                      <span>
+                        F<u>U</u>LL ARCHIVE
+                      </span>
+                    </a>
+                  </li>
+                  <li role="none" class={sep} aria-hidden="true" />
+                  {recent.slice(0, item.recent ?? 4).map((entry) => (
+                    <li role="none">
+                      <a
+                        role="menuitem"
+                        href={`/archive/articles/${entry.id}`}
+                        title={entry.data.title}
+                        data-cursor="link"
+                        data-snd="click"
+                        class={row}
+                      >
+                        <StartIcon name="doc" />
+                        <span class="max-w-[26ch] truncate uppercase">{entry.data.title}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          }
+          return (
+            <li role="none">
+              <a
+                role="menuitem"
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
+                data-cursor="link"
+                data-snd="click"
+                class={row}
+              >
+                <StartIcon name={item.icon} />
+                <span>
+                  {item.pre}
+                  <u>{item.letter}</u>
+                  {item.post}
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</div>

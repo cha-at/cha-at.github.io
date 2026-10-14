@@ -23,6 +23,7 @@
   --color-navy: #000080;
   --color-navy-light: #1084d0;
   --color-teal: #008080;
+  --color-amber: #ffb000;
 
   /* Swiss editorial */
   --color-paper: #f4f4f0;
@@ -44,6 +45,7 @@
   --z-statusbar: 50;
   --z-menu: 55;
   --z-window: 60;
+  --z-shutdown: 80;
   --z-cursor: 90;
   --z-boot: 100;
   color-scheme: light;
@@ -173,6 +175,20 @@ html.boot-active #bootscreen {
 
 html.boot-done #bootscreen {
   display: none !important;
+}
+
+/* ---------- Shut down easter egg ---------- */
+
+#shutdown-overlay {
+  display: none;
+}
+
+html.shutdown-active #shutdown-overlay {
+  display: flex !important;
+}
+
+html.shutdown-active {
+  overflow: hidden;
 }
 
 /* progressive typewriter driven by --chars / --type-delay */

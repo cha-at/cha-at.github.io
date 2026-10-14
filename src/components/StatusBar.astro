@@ -1,5 +1,5 @@
 ---
-import { sections } from "../data/site";
+import StartMenu from "./StartMenu.astro";
 
 interface Props {
   taskLabel?: string;
@@ -28,47 +28,7 @@ const staticTask = Boolean(taskLabel);
       <span>START</span>
     </button>
 
-    <div
-      id="start-menu"
-      hidden
-      role="menu"
-      aria-label="Sections"
-      class="absolute left-0 top-full z-[var(--z-menu)] w-64 bg-face bevel"
-    >
-      <div class="flex">
-        <div
-          class="flex w-7 shrink-0 items-end justify-center bg-gradient-to-b from-navy to-navy-light pb-2"
-          aria-hidden="true"
-        >
-          <span
-            class="rotate-180 whitespace-nowrap font-sans text-[11px] font-bold tracking-[0.2em] text-white [writing-mode:vertical-rl]"
-            >CYBER NEST 98</span
-          >
-        </div>
-        <ul class="min-w-56 py-1">
-          {
-            sections.map((s) => (
-              <li role="none">
-                <a
-                  role="menuitem"
-                  href={`#${s.id}`}
-                  data-section-link
-                  data-cursor="link"
-                  data-snd="click"
-                  class="group flex items-baseline gap-3 whitespace-nowrap px-3 py-2 hover:bg-navy hover:text-white focus-visible:bg-navy focus-visible:text-white focus-visible:outline-none"
-                >
-                  <span class="w-5 shrink-0 font-bold text-red group-hover:text-white">{s.num}</span>
-                  <span class="font-bold tracking-wide">{s.title}</span>
-                  <span class="ml-auto text-[10px] tracking-widest text-win-shadow group-hover:text-white/70">
-                    {s.cn}
-                  </span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
+    <StartMenu />
   </div>
 
   <a

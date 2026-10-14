@@ -46,6 +46,7 @@ export const aboutFacts = [
   { k: "FAVORITE PROTOCOL", v: "http:// forever" },
 ] as const;
 
+// Currently unused
 export const footerCredits = {
-  oldweb: { label: "A R T W O R K", href: "https://artwork.neocities.org/oldweb" },
+  oldweb: { label: "EXAMPLE", href: "https://example.com" },
 } as const;

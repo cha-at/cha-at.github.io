@@ -1,6 +1,6 @@
 ---
 import BadgeRow from "./BadgeRow.astro";
-import { footerCredits, site } from "../data/site";
+import { site } from "../data/site";
 
 interface Props {
   backHref?: string;
@@ -25,15 +25,7 @@ const { backHref = "#hero" } = Astro.props;
           >
         </p>
         <p class="mt-6 font-mono text-[11px] text-win-shadow">
-          Some assets credited to:
-          <a
-            href={footerCredits.oldweb.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-ink underline decoration-1 underline-offset-2 hover:text-red"
-            data-cursor="link"
-            data-snd="click">{footerCredits.oldweb.label}</a
-          >.
+          This website is currently UNDER CONSTRUCTION.
         </p>
       </div>
 
@@ -46,10 +38,10 @@ const { backHref = "#hero" } = Astro.props;
   <div class="flex h-9 items-stretch gap-px overflow-hidden bg-face bevel font-mono text-[11px] text-ink">
     <span class="flex items-center gap-2 px-3">
       <span class="inline-block h-2 w-2 bg-red" aria-hidden="true"></span>
-      <span class="font-bold">{site.name.toUpperCase()}.HOME</span>
+      <span class="font-bold">{site.title.toUpperCase()}</span>
     </span>
     <span class="ml-auto flex items-center px-3">
-      <span class="text-win-shadow">©</span> <span class="ml-1.5">1998—2026</span>
+      <span class="text-win-shadow">©</span> <span class="ml-1.5">CHAKERAT 2026</span>
     </span>
   </div>
 </footer>

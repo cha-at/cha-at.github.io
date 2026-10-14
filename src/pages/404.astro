@@ -8,30 +8,26 @@ import { site } from "../data/site";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>404 — {site.name} asked the void</title>
+    <title>404 — {site.title}</title>
     <meta name="description" content="This page has performed an illegal operation and will be shut down." />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="preload" href="/fonts/departure-mono.woff2" as="font" type="font/woff2" crossorigin />
   </head>
-  <body class="min-h-screen bg-navy font-mono text-[13px] leading-7 text-white sm:text-sm">
+  <body class="min-h-screen bg-navy font-mono text-[13px] leading-7 text-white sm:text-sm select-none">
     <main class="mx-auto flex min-h-screen max-w-2xl flex-col justify-center px-6 py-16">
       <div class="mb-8 flex items-center gap-3 border-b border-white/30 pb-4">
         <span class="inline-block h-3 w-3 bg-red" aria-hidden="true"></span>
-        <span class="tracking-[0.25em] text-white/70">CYBER-NEST SYSTEMS / KERNEL PANIC</span>
+        <span class="tracking-[0.25em] text-white/70">KERNEL PANIC</span>
       </div>
 
-      <p class="font-bold">A fatal exception 0x00000404 has occurred at 404:NOT_FOUND.</p>
+      <p class="font-bold">A fatal exception 0x00000404 has occurred. The current application will be terminated.</p>
 
       <div class="mt-6 space-y-1 text-white/85">
-        <p>* The current page will be terminated.</p>
-        <p>* Pixels were cleaned up. No user data was lost (there was none).</p>
-        <p>* Press any key to return to the nest.</p>
+        <p>* Press any key to terminate the current application.</p>
+        <p>* Press CTRL+W to poweroff your computer. You will lose any unsaved information in all applications.</p>
       </div>
 
-      <pre class="mt-8 text-white/50" aria-hidden="true">  +--------+
-  |  ✕  ✕  |
-  |    ▄   |
-  +--------+</pre>
+      <pre class="mt-8 text-white/50" aria-hidden="true">| ✕ _ ✕ |</pre>
 
       <div class="mt-10 flex flex-wrap items-center gap-4">
         <a
@@ -39,13 +35,13 @@ import { site } from "../data/site";
           class="inline-flex items-center gap-3 bg-face px-4 py-2.5 text-xs font-bold tracking-wider text-black bevel focus-visible:outline-white"
         >
           <span class="inline-block h-2.5 w-2.5 bg-red" aria-hidden="true"></span>
-          PRESS ANY KEY TO CONTINUE →
+          PRESS TO CONTINUE →
         </a>
-        <span class="text-white/50">or wait for the heat death of the web</span>
+        <span class="text-white/50">or wait for the heat death</span>
       </div>
 
       <p class="mt-16 border-t border-white/30 pt-4 text-[11px] text-white/50">
-        CHAKERAT_HOME_UNREACHABLE — {site.title} · EST. 1998–2026
+        OUT_OF_MEMORY | (c) ChakerAt 2026
       </p>
     </main>
 
