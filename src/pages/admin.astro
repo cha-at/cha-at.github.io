@@ -1,0 +1,335 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../data/site";
+---
+
+<Layout
+  title={`ADMIN 内容管理 — ${site.title}`}
+  description="Content management console. RESTRICTED AREA."
+  taskLabel="C:\ADMIN — 内容管理"
+  taskHref="/"
+  noindex
+>
+  <main id="main" class="px-4 pb-24 pt-20 sm:px-8 md:px-12">
+    <div class="mx-auto max-w-6xl">
+      <nav class="mb-6 flex items-baseline gap-1.5 font-mono text-[11px] tracking-widest text-win-shadow" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-red" data-cursor="link" data-snd="click">C:\</a>
+        <span>CHAKERAT</span>
+        <span>\</span>
+        <span class="font-bold text-ink">ADMIN</span>
+        <span class="animate-blink" aria-hidden="true">_</span>
+        <a href="/" class="ml-auto hover:text-red" data-cursor="link" data-snd="click">← HOME</a>
+      </nav>
+
+      <h1 class="sr-only">Content Manager 内容管理</h1>
+
+      <section class="bg-face p-1 bevel" aria-label="Content manager window">
+        <header class="flex items-center justify-between bg-navy px-2 py-1 font-mono text-[11px] font-bold text-white">
+          <span class="flex items-center gap-2">
+            ADMIN — 内容管理系统
+            <span id="admin-test-badge" class="hidden bg-amber px-1.5 py-0.5 text-[9px] text-ink">[TEST]</span>
+          </span>
+          <a
+            href="/"
+            class="flex h-4 w-4 items-center justify-center bg-face text-[9px] font-normal leading-none text-ink bevel-thin hover:bg-face-light"
+            aria-label="Close and go home"
+            data-cursor="link"
+            data-snd="close">✕</a
+          >
+        </header>
+
+        <!-- ============ LOGIN ============ -->
+        <div id="login-panel" class="bg-white p-4 bevel-in sm:p-8">
+          <p class="font-mono text-[11px] tracking-widest text-win-shadow">C:\ADMIN\AUTH</p>
+          <h2
+            class="mt-3 font-display leading-none text-ink"
+            style="--doto-weight: 700; font-size: clamp(1.8rem, 5vw, 3.4rem);"
+          >
+            RESTRICTED AREA
+          </h2>
+          <p class="mt-3 font-mono text-xs tracking-[0.35em] text-win-shadow">仅限管理员 — AUTHENTICATE TO CONTINUE</p>
+
+          <form id="login-form" class="mt-8 max-w-xl">
+            <label for="admin-token" class="block font-mono text-[11px] font-bold tracking-widest text-ink">
+              ACCESS TOKEN <span class="font-normal text-win-shadow">访问令牌</span>
+            </label>
+            <input
+              id="admin-token"
+              type="password"
+              autocomplete="off"
+              spellcheck="false"
+              required
+              class="mt-1.5 w-full bg-white px-2 py-1.5 font-mono text-xs text-ink bevel-thin-in"
+            />
+            <p id="admin-login-error" class="mt-2 hidden font-mono text-xs text-red" role="alert"></p>
+            <button
+              type="submit"
+              class="mt-4 inline-flex min-w-28 cursor-pointer justify-center bg-face px-3 py-1.5 font-mono text-[11px] font-bold tracking-wider text-ink bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+              data-cursor="link"
+              data-snd="open">CONNECT</button
+            >
+          </form>
+
+          <div class="mt-10 max-w-xl border-t border-dashed border-ink/20 pt-4 font-mono text-[11px] leading-relaxed text-win-shadow">
+            <p class="font-bold text-ink">HOW TO GET A TOKEN 如何获取令牌:</p>
+            <ol class="mt-2 list-decimal space-y-1 pl-4">
+              <li>GitHub → Settings → Developer settings → <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer" class="text-red underline hover:text-ink" data-cursor="link">Generate new token (fine-grained) ↗</a></li>
+              <li>Repository access 仅选中本仓库;Permissions → Contents → <span class="text-ink">Read and write</span></li>
+              <li>粘贴到上面点 CONNECT。令牌只保存在你本机浏览器,随时可 LOGOUT 清除。</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- ============ MANAGER ============ -->
+        <div id="manager-panel" class="hidden p-2">
+          <div class="grid gap-2 lg:grid-cols-[240px_1fr]">
+            <aside class="bg-face p-1 bevel-thin-in">
+              <p class="px-1 pt-1 font-mono text-[10px] font-bold tracking-widest text-win-shadow">ARTICLES .MD</p>
+              <ul id="list-articles" class="mt-1 space-y-px"></ul>
+              <p class="px-1 pt-3 font-mono text-[10px] font-bold tracking-widest text-win-shadow">COLLECTIONS .JSON</p>
+              <ul id="list-collections" class="mt-1 space-y-px"></ul>
+              <div class="mt-4 space-y-1.5 border-t border-dashed border-win-shadow/50 pt-3">
+                <button
+                  type="button"
+                  id="btn-new-article"
+                  class="w-full cursor-pointer bg-face px-2 py-1.5 font-mono text-[11px] font-bold tracking-wider text-ink bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+                  data-cursor="link"
+                  data-snd="click">+ NEW ARTICLE</button
+                >
+                <button
+                  type="button"
+                  id="btn-new-link"
+                  class="w-full cursor-pointer bg-face px-2 py-1.5 font-mono text-[11px] font-bold tracking-wider text-ink bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+                  data-cursor="link"
+                  data-snd="click">+ NEW LINK</button
+                >
+                <button
+                  type="button"
+                  id="btn-logout"
+                  class="w-full cursor-pointer bg-face px-2 py-1.5 font-mono text-[11px] font-bold tracking-wider text-red bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+                  data-cursor="link"
+                  data-snd="click">LOGOUT 登出</button
+                >
+              </div>
+            </aside>
+
+            <div class="min-w-0 bg-white p-4 bevel-in sm:p-6">
+              <p id="editor-path" class="truncate font-mono text-[11px] tracking-widest text-win-shadow"></p>
+
+              <div id="editor-empty" class="py-16 text-center font-mono text-xs tracking-widest text-win-shadow">
+                SELECT A FILE OR CREATE ONE — 从左侧选择或新建
+              </div>
+
+              <form id="article-form" class="hidden" novalidate>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <label class="block">
+                    <span class="font-mono text-[11px] font-bold tracking-widest text-ink">FILENAME <span class="font-normal text-win-shadow">文件名</span></span>
+                    <span class="mt-1.5 flex items-center gap-1.5">
+                      <input id="art-slug" type="text" autocomplete="off" spellcheck="false" disabled class="min-w-0 flex-1 bg-face-light px-2 py-1.5 font-mono text-xs text-ink/60 bevel-thin" />
+                      <span class="font-mono text-xs text-win-shadow">.md</span>
+                    </span>
+                  </label>
+                  <label class="block">
+                    <span class="font-mono text-[11px] font-bold tracking-widest text-ink">TYPE <span class="font-normal text-win-shadow">类型</span></span>
+                    <input id="art-type" type="text" list="type-options" autocomplete="off" spellcheck="false" class="mt-1.5 w-full bg-white px-2 py-1.5 font-mono text-xs text-ink bevel-thin-in" />
+                    <datalist id="type-options">
+                      <option value="log"></option>
+                    </datalist>
+                  </label>
+                  <label class="block">
+                    <span class="font-mono text-[11px] font-bold tracking-widest text-ink">TITLE <span class="font-normal text-win-shadow">标题</span></span>
+                    <input id="art-title" type="text" autocomplete="off" spellcheck="false" class="mt-1.5 w-full bg-white px-2 py-1.5 font-mono text-xs text-ink bevel-thin-in" />
+                  </label>
+                  <label class="block">
+                    <span class="font-mono text-[11px] font-bold tracking-widest text-ink">UPDATED <span class="font-normal text-win-shadow">更新日期</span></span>
+                    <input id="art-updated" type="date" class="mt-1.5 w-full bg-white px-2 py-1.5 font-mono text-xs text-ink bevel-thin-in" />
+                  </label>
+                </div>
+                <label class="mt-4 block">
+                  <span class="font-mono text-[11px] font-bold tracking-widest text-ink">BODY <span class="font-normal text-win-shadow">正文 (MARKDOWN)</span></span>
+                  <textarea id="art-body" rows="16" spellcheck="false" class="mt-1.5 w-full resize-y bg-white px-2 py-2 font-mono text-xs leading-relaxed text-ink bevel-thin-in"></textarea>
+                </label>
+                <div class="mt-4 flex items-center gap-1.5">
+                  <button
+                    type="submit"
+                    class="inline-flex min-w-24 cursor-pointer justify-center bg-face px-3 py-1.5 font-mono text-[11px] font-bold tracking-wider text-ink bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+                    data-cursor="link"
+                    data-snd="open">SAVE</button
+                  >
+                  <button
+                    type="button"
+                    id="btn-delete-article"
+                    class="inline-flex min-w-24 cursor-pointer justify-center bg-face px-3 py-1.5 font-mono text-[11px] font-bold tracking-wider text-red bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+                    data-cursor="link"
+                    data-snd="click">DELETE</button
+                  >
+                  <span id="dirty-article" class="ml-auto hidden font-mono text-[11px] font-bold tracking-widest text-red">*UNSAVED</span>
+                </div>
+              </form>
+
+              <form id="collection-form" class="hidden" novalidate>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <label class="block">
+                    <span class="font-mono text-[11px] font-bold tracking-widest text-ink">FILENAME <span class="font-normal text-win-shadow">文件名</span></span>
+                    <span class="mt-1.5 flex items-center gap-1.5">
+                      <input id="col-slug" type="text" autocomplete="off" spellcheck="false" disabled class="min-w-0 flex-1 bg-face-light px-2 py-1.5 font-mono text-xs text-ink/60 bevel-thin" />
+                      <span class="font-mono text-xs text-win-shadow">.json</span>
+                    </span>
+                  </label>
+                  <label class="block">
+                    <span class="font-mono text-[11px] font-bold tracking-widest text-ink">URL <span class="font-normal text-win-shadow">链接</span></span>
+                    <input id="col-url" type="url" autocomplete="off" spellcheck="false" class="mt-1.5 w-full bg-white px-2 py-1.5 font-mono text-xs text-ink bevel-thin-in" />
+                  </label>
+                  <label class="block sm:col-span-2">
+                    <span class="font-mono text-[11px] font-bold tracking-widest text-ink">NOTE <span class="font-normal text-win-shadow">备注 (可选)</span></span>
+                    <input id="col-note" type="text" autocomplete="off" class="mt-1.5 w-full bg-white px-2 py-1.5 font-mono text-xs text-ink bevel-thin-in" />
+                  </label>
+                </div>
+                <div class="mt-4 flex items-center gap-1.5">
+                  <button
+                    type="submit"
+                    class="inline-flex min-w-24 cursor-pointer justify-center bg-face px-3 py-1.5 font-mono text-[11px] font-bold tracking-wider text-ink bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+                    data-cursor="link"
+                    data-snd="open">SAVE</button
+                  >
+                  <button
+                    type="button"
+                    id="btn-delete-collection"
+                    class="inline-flex min-w-24 cursor-pointer justify-center bg-face px-3 py-1.5 font-mono text-[11px] font-bold tracking-wider text-red bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+                    data-cursor="link"
+                    data-snd="click">DELETE</button
+                  >
+                  <span id="dirty-collection" class="ml-auto hidden font-mono text-[11px] font-bold tracking-widest text-red">*UNSAVED</span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="mt-2 flex items-center justify-between gap-4 bg-face px-2 py-1 font-mono text-[11px] tracking-wider text-ink bevel-thin-in">
+            <span id="admin-status-user" class="truncate"></span>
+            <span class="flex shrink-0 items-center gap-3">
+              <span id="admin-status-msg" class="truncate"></span>
+              <a id="admin-status-link" href="#" target="_blank" rel="noopener noreferrer" class="hidden text-red underline hover:text-ink" data-cursor="link">ACTIONS ↗</a>
+            </span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="confirm-dialog" class="admin-dialog">
+    <div class="admin-dialog-bar">CONFIRM</div>
+    <p id="confirm-msg" class="px-4 py-4 font-mono text-xs leading-relaxed text-ink"></p>
+    <div class="flex justify-end gap-1.5 px-4 pb-4">
+      <button type="button" id="confirm-ok" class="admin-dlg-btn" data-cursor="link" data-snd="click">OK</button>
+      <button type="button" id="confirm-cancel" class="admin-dlg-btn" data-cursor="link" data-snd="click">CANCEL</button>
+    </div>
+  </dialog>
+
+  <dialog id="new-dialog" class="admin-dialog">
+    <div class="admin-dialog-bar">NEW FILE</div>
+    <div class="px-4 py-4">
+      <label for="new-slug" class="block font-mono text-[11px] font-bold tracking-widest text-ink">
+        <span id="new-label">FILENAME</span>
+      </label>
+      <input id="new-slug" type="text" autocomplete="off" spellcheck="false" class="mt-1.5 w-full bg-white px-2 py-1.5 font-mono text-xs text-ink bevel-thin-in" />
+      <p id="new-error" class="mt-2 hidden font-mono text-xs text-red" role="alert"></p>
+    </div>
+    <div class="flex justify-end gap-1.5 px-4 pb-4">
+      <button type="button" id="new-ok" class="admin-dlg-btn" data-cursor="link" data-snd="click">OK</button>
+      <button type="button" id="new-cancel" class="admin-dlg-btn" data-cursor="link" data-snd="click">CANCEL</button>
+    </div>
+  </dialog>
+</Layout>
+
+<style is:global>
+  /* global (not scoped): .admin-file buttons are created at runtime by
+     src/scripts/admin/index.ts and carry no astro-cid attribute. */
+  .admin-dialog {
+    margin: auto;
+    width: min(360px, calc(100vw - 32px));
+    padding: 0;
+    border: none;
+    background: var(--color-face);
+    color: var(--color-ink);
+    box-shadow:
+      inset -1px -1px 0 var(--color-win-dark),
+      inset 1px 1px 0 var(--color-win-light),
+      inset -2px -2px 0 var(--color-win-shadow),
+      inset 2px 2px 0 var(--color-face-light),
+      4px 4px 0 rgb(16 16 16 / 0.35);
+  }
+
+  .admin-dialog::backdrop {
+    background: rgb(16 16 16 / 0.4);
+  }
+
+  .admin-dialog-bar {
+    padding: 4px 8px;
+    background: var(--color-navy);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    user-select: none;
+  }
+
+  .admin-dlg-btn {
+    min-width: 80px;
+    padding: 6px 12px;
+    background: var(--color-face);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    box-shadow:
+      inset -1px -1px 0 var(--color-win-dark),
+      inset 1px 1px 0 var(--color-face-light);
+  }
+
+  .admin-dlg-btn:active {
+    box-shadow:
+      inset 1px 1px 0 var(--color-win-dark),
+      inset -1px -1px 0 var(--color-face-light);
+    transform: translate(1px, 1px);
+  }
+
+  .admin-file {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    background: var(--color-face-light);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-align: left;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+  }
+
+  .admin-file:hover {
+    background: var(--color-win-light);
+  }
+
+  .admin-file[aria-current="true"] {
+    background: var(--color-navy);
+    color: white;
+  }
+
+  .admin-file .dirty-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    background: var(--color-red);
+  }
+</style>
+
+<script>
+  import "../scripts/admin/index";
+</script>
