@@ -29,6 +29,11 @@ export const icons: Record<IconName, string> = {
     <path fill="${WHITE}" d="M2 3h12v10H2z"/>
     <path fill="${SHADOW}" d="M9 5h4v1H9z M9 7h4v1H9z M9 9h3v1H9z"/>
   `,
+  avatar: `
+    <path fill="${OUTLINE}" d="M0 0h16v16H0z"/>
+    <path fill="${NAVY}" d="M1 1h14v14H1z"/>
+    <path fill="${WHITE}" d="M6 3h4v1H6z M5 4h6v3H5z M6 7h4v1H6z M7 8h2v1H7z M4 9h8v1H4z M3 10h10v3H3z"/>
+  `,
   folder: `
     <path fill="${OUTLINE}" d="M1 3h7v2H1z M1 5h14v9H1z"/>
     <path fill="${YELLOW}" d="M2 4h5v1H2z M2 7h12v5H2z"/>

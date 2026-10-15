@@ -2,6 +2,7 @@ export type IconName =
   | "globe"
   | "house"
   | "user"
+  | "avatar"
   | "folder"
   | "network"
   | "shutdown"

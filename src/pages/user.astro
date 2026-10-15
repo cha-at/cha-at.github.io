@@ -1,0 +1,250 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+import StartIcon from "../components/StartIcon.astro";
+import { site } from "../data/site";
+import { userIntro, userSkills, userGear, userFavorites } from "../data/user";
+
+const tabs = [
+  { id: "general", label: "GENERAL" },
+  { id: "system", label: "SYSTEM" },
+  { id: "favorites", label: "FAVORITES" },
+] as const;
+---
+
+<Layout
+  title={`ABOUT 关于我 — ${site.title}`}
+  description="The extended cut of ChakerAt: skills, gear and favorites, rendered as one Win98 properties dialog."
+  taskLabel="~\USER — 用户属性"
+  taskHref="/"
+>
+  <main id="main" class="px-4 pb-24 pt-20 sm:px-8 md:px-12">
+    <div class="mx-auto max-w-5xl">
+      <nav class="mb-6 flex items-baseline gap-1.5 font-mono text-[11px] tracking-widest text-win-shadow" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-red" data-cursor="link" data-snd="click">C:\</a>
+        <span>CHAKERAT</span>
+        <span>\</span>
+        <span class="font-bold text-ink">USER</span>
+        <span class="animate-blink" aria-hidden="true">_</span>
+        <a href="/" class="ml-auto hover:text-red" data-cursor="link" data-snd="click">← HOME</a>
+      </nav>
+
+      <h1 class="sr-only">About Me 关于我</h1>
+
+      <section class="bg-face p-1 bevel" data-reveal aria-label="User properties dialog">
+        <header class="flex items-center justify-between bg-navy px-2 py-1 font-mono text-[11px] font-bold text-white">
+          <span>USER PROPERTIES — 查子</span>
+          <a
+            href="/"
+            class="flex h-4 w-4 items-center justify-center bg-face text-[9px] font-normal leading-none text-ink bevel-thin hover:bg-face-light"
+            aria-label="Close and go home"
+            data-cursor="link"
+            data-snd="close">✕</a
+          >
+        </header>
+
+        <div class="px-1 pt-2">
+          <div role="tablist" class="flex items-end gap-[2px] font-mono text-[11px] font-bold tracking-wider" aria-label="Property sheets">
+            {
+              tabs.map((t, i) => (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`tab-${t.id}`}
+                  class="w98-tab text-ink"
+                  aria-selected={i === 0 ? "true" : "false"}
+                  aria-controls={`panel-${t.id}`}
+                  tabindex={i === 0 ? 0 : -1}
+                  data-cursor="link"
+                  data-snd="click"
+                >
+                  {t.label}
+                </button>
+              ))
+            }
+          </div>
+
+          <div role="tabpanel" id="panel-general" aria-labelledby="tab-general" class="user-panel bg-white p-4 bevel-in sm:p-8">
+            <div class="flex flex-wrap items-start justify-between gap-x-8 gap-y-6">
+              <div class="min-w-0">
+                <p class="font-mono text-[11px] tracking-widest text-win-shadow">C:\USER\GENERAL</p>
+                <h2
+                  class="mt-3 font-display leading-none text-ink"
+                  style="--doto-weight: 700; font-size: clamp(2.6rem, 8vw, 5.5rem);"
+                >
+                  CHAKERAT
+                </h2>
+                <p class="mt-3 font-mono text-xs tracking-[0.35em] text-win-shadow">查子 — THE HUMAN BEHIND THE NEST</p>
+              </div>
+              <div class="shrink-0 bg-face p-1 bevel-thin" title="Account picture (unphotographable)">
+                <StartIcon name="avatar" size={96} />
+              </div>
+            </div>
+
+            <div class="mt-8 max-w-prose space-y-4 font-sans text-base leading-relaxed text-ink/75 sm:text-lg" data-reveal style="--i: 1">
+              {userIntro.map((p) => <p>{p}</p>)}
+            </div>
+          </div>
+
+          <div role="tabpanel" id="panel-system" aria-labelledby="tab-system" class="user-panel hidden bg-white p-4 bevel-in sm:p-8">
+            <p class="font-mono text-[11px] tracking-widest text-win-shadow">C:\USER\SYSTEM</p>
+            <h2 class="mt-3 font-display leading-none text-ink" style="--doto-weight: 700; font-size: clamp(1.8rem, 4.5vw, 3rem);">
+              SKILLS &amp; GEAR
+            </h2>
+            <p class="mt-3 font-mono text-xs tracking-[0.35em] text-win-shadow">技能与装备 — SPEC SHEET</p>
+
+            {
+              [
+                { heading: "SKILLS", cn: "能力值", rows: userSkills },
+                { heading: "GEAR", cn: "装备栏", rows: userGear },
+              ].map((group, gi) => (
+                <section class={gi > 0 ? "mt-10" : "mt-8"} data-reveal style={`--i: ${gi}`}>
+                  <h3 class="flex items-baseline justify-between border-b-2 border-ink pb-1.5">
+                    <span class="font-display text-xl leading-none text-ink" style="--doto-weight: 700;">{group.heading}</span>
+                    <span class="font-mono text-[11px] tracking-widest text-win-shadow">{group.cn}</span>
+                  </h3>
+                  <dl class="font-mono text-xs">
+                    {group.rows.map((row) => (
+                      <div class="flex flex-col gap-0.5 border-b border-dashed border-ink/15 py-2.5 last:border-b-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                        <dt class="shrink-0 text-win-shadow">{row.k}</dt>
+                        <dd class="break-words text-ink sm:text-right sm:font-bold">{row.v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              ))
+            }
+          </div>
+
+          <div role="tabpanel" id="panel-favorites" aria-labelledby="tab-favorites" class="user-panel hidden bg-white p-4 bevel-in sm:p-8">
+            <p class="font-mono text-[11px] tracking-widest text-win-shadow">C:\USER\PREFERENCES</p>
+            <h2 class="mt-3 font-display leading-none text-ink" style="--doto-weight: 700; font-size: clamp(1.8rem, 4.5vw, 3rem);">
+              PREFERENCES
+            </h2>
+            <p class="mt-3 font-mono text-xs tracking-[0.35em] text-win-shadow">个人偏好 — THINGS I LIKE</p>
+
+            {
+              userFavorites.map((group, gi) => (
+                <section class={gi > 0 ? "mt-10" : "mt-8"} data-reveal style={`--i: ${gi}`}>
+                  <h3 class="flex items-baseline justify-between border-b-2 border-ink pb-1.5">
+                    <span class="font-display text-xl leading-none text-ink" style="--doto-weight: 700;">{group.label}</span>
+                    <span class="font-mono text-[11px] tracking-widest text-win-shadow">
+                      {group.cn} · {group.items.length} {group.items.length === 1 ? "ITEM" : "ITEMS"}
+                    </span>
+                  </h3>
+                  <ul class="font-mono text-xs">
+                    {group.items.map((item, i) => (
+                      <li class="flex items-baseline gap-3 border-b border-dashed border-ink/15 px-1 py-2.5 last:border-b-0">
+                        <span class="shrink-0 tabular-nums text-win-shadow">{String(i + 1).padStart(2, "0")}</span>
+                        <span class="min-w-0 font-bold text-ink">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))
+            }
+          </div>
+
+          <div class="flex justify-end gap-1.5 px-1 pb-1 pt-2.5">
+            <a
+              href="/"
+              class="inline-flex min-w-20 justify-center bg-face px-3 py-1.5 font-mono text-[11px] font-bold tracking-wider text-ink bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+              data-cursor="link">OK</a
+            >
+            <a
+              href="/"
+              class="inline-flex min-w-20 justify-center bg-face px-3 py-1.5 font-mono text-[11px] font-bold tracking-wider text-ink bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+              data-cursor="link">CANCEL</a
+            >
+            <button
+              type="button"
+              id="apply-btn"
+              class="inline-flex min-w-20 cursor-pointer justify-center bg-face px-3 py-1.5 font-mono text-[11px] font-bold tracking-wider text-ink bevel-thin active:bevel-thin-in active:translate-x-px active:translate-y-px"
+              data-cursor="link"
+              data-snd="click">APPLY</button
+            >
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <Footer backHref="/" />
+</Layout>
+
+<style>
+  /* Win98 property-sheet tabs: inactive tabs tuck behind the page edge
+     (the panel paints over them), the active tab paints on top of it. */
+  .w98-tab {
+    position: relative;
+    z-index: 0;
+    padding: 3px 12px 7px;
+    background: var(--color-face);
+    box-shadow:
+      inset 1px 1px 0 var(--color-win-light),
+      inset 2px 2px 0 var(--color-face-light),
+      inset -1px 0 0 var(--color-win-shadow),
+      inset -2px 0 0 var(--color-win-shadow);
+  }
+
+  .w98-tab[aria-selected="true"] {
+    z-index: 2;
+    padding-top: 5px;
+    padding-bottom: 9px;
+    background: var(--color-win-light);
+  }
+
+  .user-panel {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 400px) {
+    .w98-tab {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+</style>
+
+<script>
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+  const panels = [...document.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+
+  const select = (tab: HTMLButtonElement, focus = false): void => {
+    for (const t of tabs) {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+    }
+    const target = tab.getAttribute("aria-controls");
+    for (const p of panels) p.classList.toggle("hidden", p.id !== target);
+    if (target) history.replaceState(null, "", `#${target.replace("panel-", "")}`);
+    if (focus) tab.focus();
+  };
+
+  for (const tab of tabs) tab.addEventListener("click", () => select(tab));
+
+  document.querySelector('[role="tablist"]')?.addEventListener("keydown", (event) => {
+    if (!(event instanceof KeyboardEvent)) return;
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    const current = tabs.indexOf(document.activeElement as HTMLButtonElement);
+    if (current < 0) return;
+    const offset = event.key === "ArrowRight" ? 1 : tabs.length - 1;
+    select(tabs[(current + offset) % tabs.length], true);
+    event.preventDefault();
+  });
+
+  const initial = location.hash.slice(1);
+  const preset = tabs.find((t) => t.getAttribute("aria-controls") === `panel-${initial}`);
+  if (preset) select(preset);
+
+  const apply = document.getElementById("apply-btn");
+  if (apply) {
+    apply.addEventListener("click", () => {
+      apply.textContent = "APPLIED.";
+      window.setTimeout(() => {
+        apply.textContent = "APPLY";
+      }, 1200);
+    });
+  }
+</script>

@@ -3,11 +3,12 @@ import { icons, type IconName } from "./StartIcons";
 
 interface Props {
   name: IconName;
+  size?: number;
 }
 
-const { name } = Astro.props;
+const { name, size = 16 } = Astro.props;
 ---
 
-<span class="h-4 w-4 shrink-0" aria-hidden="true">
-  <svg class="block h-4 w-4" viewBox="0 0 16 16" shape-rendering="crispEdges" set:html={icons[name]} />
+<span class="shrink-0" style={`width:${size}px;height:${size}px`} aria-hidden="true">
+  <svg class="block" style={`width:${size}px;height:${size}px`} viewBox="0 0 16 16" shape-rendering="crispEdges" set:html={icons[name]} />
 </span>

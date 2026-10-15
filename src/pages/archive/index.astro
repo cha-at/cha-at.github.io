@@ -31,7 +31,7 @@ const domainOf = (u: string) => new URL(u).hostname.replace(/^www\./, "");
 <Layout
   title={`THE ARCHIVE 档案柜 — ${site.title}`}
   description="The full archive: articles on a timeline, links in a drawer. Kept forever, sorted never."
-  taskLabel="C:\ARCHIVE — 档案柜"
+  taskLabel="~\ARCHIVE — 档案柜"
   taskHref="/"
 >
   <main id="main" class="px-4 pb-24 pt-20 sm:px-8 md:px-12">
@@ -137,7 +137,7 @@ const domainOf = (u: string) => new URL(u).hostname.replace(/^www\./, "");
       </section>
     </div>
   </main>
-  <Footer backHref="/" />
+  <Footer backHref="/archive/" />
 </Layout>
 
 <script>
