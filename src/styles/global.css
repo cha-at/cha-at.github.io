@@ -358,6 +358,28 @@ html.shutdown-active {
   mix-blend-mode: difference;
 }
 
+/* While a modal dialog is open, cursor.ts promotes both elements to the top
+   layer as manual popovers. The UA popover style (margin auto centering,
+   canvas background, solid border) must not fight the cursor's own
+   positioning — reset only what the UA injects. */
+.cursor-cross[popover] {
+  margin: 0;
+  border: none;
+  background: transparent;
+  overflow: visible;
+}
+
+.cursor-ring[popover] {
+  margin: 0;
+  overflow: visible;
+}
+
+/* Idle popover state must stay transparent (UA would paint canvas white),
+   but never override the active lens disc. */
+.cursor-ring[popover]:not(.cursor-ring--active) {
+  background: transparent;
+}
+
 /* ---------- Cross-page transition: window minimize ↔ restore ---------- */
 
 /* Both documents opt in via this stylesheet; the browser snapshots the

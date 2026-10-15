@@ -71,6 +71,41 @@ export function initCursor(): void {
   document.documentElement.addEventListener("pointerleave", hide);
   window.addEventListener("blur", hide);
 
+  /* showModal() renders dialogs in the browser's top layer, above any
+     z-index — the cursor would vanish under the dialog (and the site hides
+     the native cursor, leaving NO pointer). Promote cursor to the top layer
+     via a manual popover while a modal dialog is open: shown after the
+     dialog, it paints above it, and mix-blend-mode still inverts the dialog
+     content beneath. */
+  const promote = (): void => {
+    for (const el of [cross, ring]) {
+      if (el.matches(":popover-open")) continue;
+      el.setAttribute("popover", "manual");
+      el.showPopover();
+    }
+  };
+  const demote = (): void => {
+    for (const el of [cross, ring]) {
+      if (el.matches(":popover-open")) el.hidePopover();
+      el.removeAttribute("popover");
+    }
+  };
+  document.addEventListener(
+    "toggle",
+    (event) => {
+      if (!(event.target instanceof HTMLDialogElement)) return;
+      if (event.newState === "open") {
+        if (event.target.matches(":modal")) promote();
+      } else if (!document.querySelector("dialog:modal")) {
+        /* A closed dialog no longer matches :modal, so the guard only
+           applies to the open branch — demote runs whenever the last
+           modal dialog has just closed. */
+        demote();
+      }
+    },
+    true,
+  );
+
   document.addEventListener("pointerover", (event) => {
     const target = event.target as Element | null;
     hovering = Boolean(target?.closest?.('a, button, input, textarea, select, [data-cursor="link"]'));
